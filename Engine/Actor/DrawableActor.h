@@ -15,6 +15,9 @@ public:
 	virtual void Draw() override;
 	virtual void SetPosition(const Vector2& newPosition) override;
 
+	// 출력 변수 함수 설정
+	inline void SetVisible(bool visible) { isVisible = visible; }
+
 	// 충돌 확인 함수.
 	bool Intersect(const DrawableActor& other);
 
@@ -31,4 +34,7 @@ protected:
 
 	// 색상 값.
 	Color color = Color::White;
+
+	// 액터의 시각출력 요소
+	bool isVisible;
 };

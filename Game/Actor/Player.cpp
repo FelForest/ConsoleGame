@@ -35,7 +35,7 @@ void Player::Update(float deltaTime)
 		{
 			position.x -= 1;
 		}
-
+		isVisible = !isVisible;
 		//position.x -= 1;
 		//position.x = position.x < 0 ? 0 : position.x;
 	}

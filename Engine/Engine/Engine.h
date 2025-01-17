@@ -2,6 +2,7 @@
 
 #include "Core.h"
 #include "Math/Vector2.h"
+#include "Container/Buffer.h"
 
 // 입력 처리를 위한 구조체.
 struct KeyState
@@ -99,5 +100,12 @@ protected:
 	Vector2 screenSize;
 
 	// 화면 지울 때 사용할 버퍼(Buffer/Blob).
-	char* emptyStringBuffer = nullptr;
+	Buffer<char> emptyStringBuffer;
+
+	// 더블링을 위한 버퍼
+	Buffer<char> frontStringBuffer;
+	Buffer<char> backStringBuffer;
+
+	// 깊이를 위한 버퍼
+	Buffer<int> zBuffer;
 };

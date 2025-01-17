@@ -13,7 +13,7 @@
 Engine* Engine::instance = nullptr;
 
 Engine::Engine()
-	: quit(false), mainLevel(nullptr), screenSize(40, 25)
+	: quit(false), mainLevel(nullptr), screenSize(50, 25)
 {
 	// 랜덤 시드 설정.
 	srand((unsigned int)time(nullptr));
@@ -26,10 +26,7 @@ Engine::Engine()
 
 	// 화면 지울 때 사용할 버퍼 초기화.
 	// 1. 버퍼 크기 할당.
-	emptyStringBuffer = new char[(screenSize.x + 1) * screenSize.y + 1];
-
-	// 버퍼 덮어쓰기.
-	memset(emptyStringBuffer, ' ', (screenSize.x + 1) * screenSize.y + 1);
+	emptyStringBuffer.Allocate(screenSize.x, screenSize.y, ' ');
 
 	// 2. 값 할당.
 	for (int y = 0; y < screenSize.y; ++y)
@@ -38,13 +35,17 @@ Engine::Engine()
 		emptyStringBuffer[(y * (screenSize.x + 1)) + screenSize.x] = '\n';
 	}
 
-	// 마지막에 널 문자 추가.
-	emptyStringBuffer[(screenSize.x + 1) * screenSize.y] = '\0';
+	// 더블링을 위한 버퍼 추가
+	frontStringBuffer = emptyStringBuffer;
+	backStringBuffer = emptyStringBuffer;
+
+	// z버퍼 할당
+	zBuffer.Allocate(screenSize.x, screenSize.y, 0);
 
 	// 디버깅.
 #if _DEBUG
 	char buffer[2048];
-	strcpy_s(buffer, 2048, emptyStringBuffer);
+	//strcpy_s(buffer, 2048, emptyStringBuffer);
 #endif
 }
 
@@ -55,9 +56,6 @@ Engine::~Engine()
 	{
 		delete mainLevel;
 	}
-
-	// 클리어 버퍼 삭제.
-	delete[] emptyStringBuffer;
 }
 
 void Engine::Run()
@@ -138,8 +136,6 @@ void Engine::Run()
 			// 프레임 활성화.
 			shouldUpdate = true;
 		}
-
-		//Sleep(1);
 	}
 }
 
@@ -274,6 +270,7 @@ void Engine::Clear()
 	SetCursorPosition(0, 0);
 
 	// 화면 지우기.
+	// 버퍼 출력 문제 있음
 	std::cout << emptyStringBuffer;
 
 	//int height = 25;

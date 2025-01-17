@@ -3,7 +3,7 @@
 #include "Engine/Engine.h"
 
 DrawableActor::DrawableActor(const char* image)
-	: Actor()/*, image(image)*/
+	: Actor(), isVisible(true)
 {
 	// 전달 받은 문자열 복사.
 	auto length = strlen(image) + 1;
@@ -22,6 +22,12 @@ DrawableActor::~DrawableActor()
 void DrawableActor::Draw()
 {
 	Super::Draw();
+
+	// 가시성 활성화 안되면 반환
+	if (!isVisible)
+	{
+		return;
+	}
 
 	// 색상 설정.
 	SetColor(color);
