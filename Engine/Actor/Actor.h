@@ -20,7 +20,7 @@ public:
 
 	// 루프 처리 함수.
 	virtual void Update(float delatTime);
-	virtual void Draw(char** backbuffer);
+	virtual void Draw();
 
 	// Getter/Setter.
 	virtual void SetPosition(const Vector2& newPosition);

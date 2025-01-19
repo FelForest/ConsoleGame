@@ -3,7 +3,7 @@
 #include "Engine/Engine.h"
 
 DrawableActor::DrawableActor(const char* image)
-	: Actor(), isVisible(true)
+	: Actor()/*, image(image)*/
 {
 	// 전달 받은 문자열 복사.
 	auto length = strlen(image) + 1;
@@ -23,24 +23,20 @@ void DrawableActor::Draw()
 {
 	Super::Draw();
 
-	// 가시성 활성화 안되면 반환
-	if (!isVisible)
-	{
-		return;
-	}
-
 	// 색상 설정.
-	SetColor(color);
+	//Engine::Get().SetColor(color);
 
 	// 그리기.
 	// 1단계: 콘솔 좌표 옮기기.
-	Engine::Get().SetCursorPosition(position);
+	//Engine::Get().SetCursorPosition(position);
 
 	// 2단계: 그리기 (콘솔 출력).
-	Log(image);
+	//Log(image);
+
+	Engine::Get().Draw(position, image, color);
 
 	// 색상 복구.
-	SetColor(Color::White);
+	//Engine::Get().SetColor(Color::White);
 }
 
 void DrawableActor::SetPosition(const Vector2& newPosition)
