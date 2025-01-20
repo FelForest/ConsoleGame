@@ -19,15 +19,24 @@ void GameLevel::Update(float deltaTime)
 {
     Super::Update(deltaTime);
 
-    static Timer timer(60.0f / bpm);
+    // 스테이지 제한 시간
+    /*static Timer gameOver(20.0f);
+    gameOver.Update(deltaTime);
+    if (gameOver.IsTimeOut())
+    {
+        Game::Get().QuitGame();
+    }*/
+
+    static Timer timer(spawnTime);
+    static float nodeSpeed = ((Game::Get().ScreenSize().x / 2) - 1) / spawnTime;
     timer.Update(deltaTime);
     if(timer.IsTimeOut())
     {
         // TODO : 이거 고처야함
-        Node* node = new Node(15);
+        Node* node = new Node(nodeSpeed);
         AddActor(node);
         timer.Reset();
-        timer.SetTime(60.0f / bpm);
+        timer.SetTime(spawnTime / 2);
     }
 }
 

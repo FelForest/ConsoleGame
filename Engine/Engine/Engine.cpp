@@ -101,7 +101,7 @@ void Engine::Run()
 	//float targetFrameRate = 90.0f;
 
 	// 한 프레임 시간 계산.
-	//float targetOneFrameTime = 1.0f / targetFrameRate;
+	float targetOneFrameTime = 1.0f / targetFrameRate;
 
 	// Game-Loop.
 	while (true)
@@ -127,6 +127,14 @@ void Engine::Run()
 		// 프레임 확인.
 		if (deltaTime >= targetOneFrameTime)
 		{
+			if (!isSoundPlay)
+			{
+				// 사운드 플레이
+
+				// 변수 전환
+				isSoundPlay = !isSoundPlay;
+				continue;
+			}
 			// 입력 처리 (현재 키의 눌림 상태 확인).
 			ProcessInput();
 

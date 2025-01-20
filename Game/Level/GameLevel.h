@@ -48,5 +48,6 @@ private:
 
 private:
 	bool isGameOver = false;
-	float bpm = 90.0f;
+	float bpm = 60.0f;
+	float spawnTime = 60.0f / bpm;
 };
