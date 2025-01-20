@@ -3,6 +3,7 @@
 #include "Actor/Actor.h"
 #include "Container/List.h"
 class HeartPart;
+
 class Heart : public Actor
 {
 	RTTI_DECLARATIONS(Heart, Actor)

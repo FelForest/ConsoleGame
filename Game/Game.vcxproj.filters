@@ -30,7 +30,10 @@
     <ClCompile Include="Actor\Node\Node.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Actor\Heart.cpp">
+    <ClCompile Include="Actor\Heart\Heart.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\Heart\HeartPart.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,7 +50,10 @@
     <ClInclude Include="Actor\Node\ChildNode.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Actor\Heart.h">
+    <ClInclude Include="Actor\Heart\Heart.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\Heart\HeartPart.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

@@ -33,3 +33,8 @@ inline Vector2 Actor::Position() const
 {
 	return position;
 }
+
+void Actor::SetIsVisible(bool active)
+{
+	isVisible = active;
+}

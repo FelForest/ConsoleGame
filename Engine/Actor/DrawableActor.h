@@ -21,10 +21,6 @@ public:
 	// Getter.
 	inline int Width() const { return width; }
 
-	void SetIsVisible(bool active)
-	{
-		isVisible = active;
-	}
 
 protected:
 

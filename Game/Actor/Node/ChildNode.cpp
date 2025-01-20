@@ -11,6 +11,12 @@ ChildNode::ChildNode(Vector2 position, float speed)
 
 void ChildNode::Draw()
 {
+	if (!isVisible)
+	{
+		return;
+	}
+	// 상속 받는데 뭐가 문제일까
+	Super::Draw();
 	Game::Get().Draw(position, image, Color::BrightYellow);
 }
 

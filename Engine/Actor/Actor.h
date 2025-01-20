@@ -30,6 +30,8 @@ public:
 	inline void SetActive(bool active) { isActive = active; }
 	inline void Destroy() { isExpired = true; }
 
+	void SetIsVisible(bool active);
+
 protected:
 	// 액터의 위치.
 	Vector2 position;

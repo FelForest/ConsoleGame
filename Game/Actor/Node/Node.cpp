@@ -11,7 +11,7 @@ Node::Node(float speed)
 
 	target = xScreenSize / 2;
 
-	position.y = screenSize.y - 10;
+	//position.y = screenSize.y - 10;
 	SetPosition(position);
 
 	for (int ix = 0; ix < 4; ++ix)
@@ -39,7 +39,7 @@ void Node::Update(float deltaTime)
 
 	for (auto& child : children)
 	{
-		child->SetIsVisible(false);
+		child->SetIsVisible(true);
 		isMiss = child->MoveToCenter(target, deltaTime);
 	}
 

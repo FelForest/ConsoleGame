@@ -179,7 +179,8 @@
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Actor\Heart.cpp" />
+    <ClCompile Include="Actor\Heart\Heart.cpp" />
+    <ClCompile Include="Actor\Heart\HeartPart.cpp" />
     <ClCompile Include="Actor\Node\ChildNode.cpp" />
     <ClCompile Include="Actor\Node\Node.cpp" />
     <ClCompile Include="Game\Game.cpp" />
@@ -187,7 +188,8 @@
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Actor\Heart.h" />
+    <ClInclude Include="Actor\Heart\Heart.h" />
+    <ClInclude Include="Actor\Heart\HeartPart.h" />
     <ClInclude Include="Actor\Node\ChildNode.h" />
     <ClInclude Include="Actor\Node\Node.h" />
     <ClInclude Include="Game\Game.h" />
