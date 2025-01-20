@@ -1,46 +1,52 @@
 #pragma once
 
-#include <Level/Level.h>
-#include <Math/Vector2.h>
+#include "Level/Level.h"
+#include "Math/Vector2.h"
 
-// 소코반 게임 레벨.
-class DrawableActor;
+// 있어야 할 액터
+// UI 부분
+// 리듬에 맞는 심장 노드
+// 리듬 노드
+class Node;
+class ChildNode;
+// 라이프
+
+// 움직이는 액터
+// 플레이어
 class Player;
-class Box;
-class Target;
+// 몬스터
+class Monster;
+
+// 필드
+class Map;
+// 벽
+class Wall;
+// 땅
+class Ground;
+// 문
+class Door;
+// 방
+class Room;
+// 길
+class road;
+// 전방 선언
+
 class GameLevel : public Level
 {
 	RTTI_DECLARATIONS(GameLevel, Level)
 
 public:
 	GameLevel();
+	~GameLevel();
 
-	// 업데이트 함수.
 	virtual void Update(float deltaTime) override;
 
-	// 레벨의 그리기 함수.
 	virtual void Draw() override;
 
-	// 플레이어가 이동이 가능한 지 확인하는 함수.
-	bool CanPlayerMove(const Vector2& position);
+private:
+	bool CheckGameOver();
 
 private:
-	// 박스를 옮긴 뒤 게임을 클리어했는지 확인하는 함수.
-	bool CheckGameClear();
-
-private:
-	// 벽/땅 액터 배열.
-	List<DrawableActor*> map;
-
-	// 박스 액터.
-	List<Box*> boxes;
-
-	// 타겟 액터.
-	List<Target*> targets;
-
-	// 플레이어 액터.
-	Player* player = nullptr;
-
-	// 게임 클리어 변수.
-	bool isGameClear = false;
+	bool isGameOver = false;
+	float bpm = 90.0f;
 };

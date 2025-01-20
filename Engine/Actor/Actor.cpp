@@ -18,6 +18,10 @@ void Actor::Update(float delatTime)
 
 void Actor::Draw()
 {
+	if (!isVisible)
+	{
+		return;
+	}
 }
 
 void Actor::SetPosition(const Vector2& newPosition)

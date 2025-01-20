@@ -21,6 +21,11 @@ public:
 	// Getter.
 	inline int Width() const { return width; }
 
+	void SetIsVisible(bool active)
+	{
+		isVisible = active;
+	}
+
 protected:
 
 	// 화면에 그릴 문자 값.
@@ -32,6 +37,5 @@ protected:
 	// 색상 값.
 	Color color = Color::White;
 
-	// 가시성? 값
-	bool isVisible = true;
+	
 };

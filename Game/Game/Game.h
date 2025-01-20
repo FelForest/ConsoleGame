@@ -8,15 +8,16 @@ public:
 	Game();
 	~Game();
 
-	void ToggleMenu();
-
 	static Game& Get() { return *instance; }
+
+	Level* CurrentLevel();
 
 private:
 	bool showMenu = false;
 
 	Level* menuLevel = nullptr;
 	Level* backLevel = nullptr;
+
 
 private:
 	static Game* instance;

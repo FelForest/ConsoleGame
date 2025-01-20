@@ -29,7 +29,7 @@ BOOL WINAPI MessageProcessor(DWORD message)
 Engine* Engine::instance = nullptr;
 
 Engine::Engine()
-	: quit(false), mainLevel(nullptr), screenSize(40, 25)
+	: quit(false), mainLevel(nullptr), screenSize(100, 50)
 {
 	// ·£´ý ½Ãµå ¼³Á¤.
 	srand((unsigned int)time(nullptr));
@@ -164,6 +164,7 @@ void Engine::LoadLevel(Level* newLevel)
 	mainLevel = newLevel;
 }
 
+
 void Engine::AddActor(Actor* newActor)
 {
 	// ¿¹¿Ü Ã³¸®.
@@ -247,6 +248,7 @@ Engine& Engine::Get()
 	// ½Ì±ÛÅæ °´Ã¼ ¹ÝÈ¯.
 	return *instance;
 }
+
 
 void Engine::ProcessInput()
 {

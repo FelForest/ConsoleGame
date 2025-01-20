@@ -40,4 +40,7 @@ protected:
 
 	// 액터의 제거 요청이 됐는지 여부를 나타내는 변수.
 	bool isExpired;
+
+	// 가시성? 값
+	bool isVisible = true;
 };
