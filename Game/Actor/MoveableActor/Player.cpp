@@ -2,7 +2,7 @@
 #include "Game/Game.h"
 #include "Level/GameLevel.h"
 #include "Actor/Heart/Heart.h"
-
+#include "Actor/MoveableActor/Monster/Monster.h"
 
 Player::Player(const Vector2& position, GameLevel* level)
 	: MoveableActor(level)
@@ -20,11 +20,20 @@ void Player::Update(float deltaTime)
 		Heart::Get().isCanMove = true;
 	}*/
 
-	
-	if (Heart::Get().HIT())
+	isMove = false;
+
+	playerMove();
+
+
+	if (Heart::Get().MISS())
 	{
-		playerMove();
+		if (!isMove)
+		{
+			isCorrect = false;
+		}
 	}
+
+	Heart::Get().SetBeat(isCorrect);
 }
 
 void Player::Draw()
@@ -44,18 +53,37 @@ void Player::playerMove()
 {
 	if (Engine::Get().GetKeyDown(VK_RIGHT))
 	{
-		MoveOrAttack(Vector2(position.x + 1, position.y));
+		ProcessMove(Vector2(position.x + 1, position.y));
 	}
-	if (Engine::Get().GetKeyDown(VK_LEFT))
+	else if (Engine::Get().GetKeyDown(VK_LEFT))
 	{
-		MoveOrAttack(Vector2(position.x - 1, position.y));
+		ProcessMove(Vector2(position.x - 1, position.y));
 	}
-	if (Engine::Get().GetKeyDown(VK_UP))
+	else if (Engine::Get().GetKeyDown(VK_UP))
 	{
-		MoveOrAttack(Vector2(position.x, position.y - 1));
+		ProcessMove(Vector2(position.x, position.y - 1));
 	}
-	if (Engine::Get().GetKeyDown(VK_DOWN))
+	else if (Engine::Get().GetKeyDown(VK_DOWN))
 	{
-		MoveOrAttack(Vector2(position.x, position.y + 1));
+		ProcessMove(Vector2(position.x, position.y + 1));
 	}
+}
+
+void Player::ProcessMove(const Vector2& newPosition)
+{
+	if (Heart::Get().HIT()) // 타이밍에 맞게 이동했다면
+	{
+		MoveOrAttack(newPosition);
+		isCorrect = true; // 올바른 움직임
+	}
+	else
+	{
+		isCorrect = false; // 타이밍에 맞지 않은 움직임
+	}
+	isMove = true; // 움직임 발생 기록
+}
+
+void Player::MoveOrAttack(Vector2 target)
+{
+	Super::MoveOrAttack(target);
 }

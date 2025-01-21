@@ -16,7 +16,13 @@ public:
 
 	void playerMove();
 
+	virtual void MoveOrAttack(Vector2 target) override;
+
 public:
 	bool isAttacked = false;
+	bool isCorrect = false;
+	bool isMove = false;
 private:
+
+	void ProcessMove(const Vector2& newPosition);
 };

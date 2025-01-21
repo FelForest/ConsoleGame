@@ -40,6 +40,7 @@ void MoveableActor::MoveOrAttack(Vector2 target)
         }
 
         Attack(*actor);
+        return;
     }
 }
 

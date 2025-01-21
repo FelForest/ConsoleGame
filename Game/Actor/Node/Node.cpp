@@ -21,19 +21,19 @@ Node::Node(Vector2 position, float speed)
 		children.PushBack(new ChildNode({ margin, position.y + ix }, nodeSpeed));
         isHits.PushBack(false);
         isMisses.PushBack(false);
-		//children.PushBack(new ChildNode({ xScreenSize - margin, position.y + ix }, -nodeSpeed));
-        //isHits.PushBack(false);
-        //isMisses.PushBack(false);
+		children.PushBack(new ChildNode({ xScreenSize - margin, position.y + ix }, -nodeSpeed));
+        isHits.PushBack(false);
+        isMisses.PushBack(false);
 	}
 }
 
 Node::~Node()
 {
-	for (int ix = 0; ix < noteCount * 1; ++ix)
+	for (int ix = 0; ix < noteCount * 2; ++ix)
 	{
 		delete children[ix];
 		children[ix] = nullptr;
-        OutputDebugStringA("a");
+        
 	}
 }
 
@@ -43,12 +43,12 @@ void Node::Update(float deltaTime)
 
     isHit = false;
 
-    for (int ix = 0; ix < noteCount * 1; ++ix)
+    for (int ix = 0; ix < noteCount * 2; ++ix)
     {
         children[ix]->MoveToCenter(target, deltaTime, isMisses[ix], isHits[ix]);
     }
 
-    for (int ix = 0; ix < noteCount * 1; ++ix)
+    for (int ix = 0; ix < noteCount * 2; ++ix)
     {
         if (!isHit)
         {
@@ -73,7 +73,7 @@ void Node::Update(float deltaTime)
 
     if (isMiss)
     {
-        Heart::Get().SetBeat(true);
+        //Heart::Get().SetBeat(true);
         Heart::Get().Update(deltaTime);
         Heart::Get().SetMiss(true);
         Heart::Get().SetHit(false);
@@ -83,7 +83,7 @@ void Node::Update(float deltaTime)
         {
             isMiss = false;
             Destroy();
-            Heart::Get().SetBeat(false);
+            //Heart::Get().SetBeat(false);
         }
     }
     

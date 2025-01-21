@@ -20,10 +20,10 @@ GameLevel::GameLevel()
     AddActor(player);
     AddMoveActor(player);
 
-    Slime* slime = new Slime("S", { 3, 5 }, this);
-    AddActor(slime);
-    AddMoveActor(slime);
-    AddMonster(slime);
+    //Slime* slime = new Slime("S", { 3, 5 }, this);
+    //AddActor(slime);
+    //AddMoveActor(slime);
+    //AddMonster(slime);
 
 }
 
