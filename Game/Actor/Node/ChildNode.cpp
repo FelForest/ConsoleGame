@@ -1,6 +1,7 @@
 ﻿#include "ChildNode.h"
 #include "Engine/Timer.h"
 #include "Game/Game.h"
+#include "Actor/Heart/Heart.h"
 
 ChildNode::ChildNode(Vector2 position, float speed)
 	: DrawableActor("|"), speed(speed)
@@ -20,16 +21,18 @@ void ChildNode::Draw()
 	Game::Get().Draw(position, image, Color::BrightYellow);
 }
 
-void ChildNode::MoveToCenter(Vector2 target, float deltaTime, bool& isMiss, bool& isHit)
+void ChildNode::MoveToCenter(int target, float deltaTime, bool& isMiss, bool& isHit)
 {
-	static int mid = (target.x + target.y) / 2;
+	static int mid = Heart::Get().Position().x;
+	int min = mid - target / 2;
+	int max = mid + target / 2;
 	// left
 	if (speed > 0.0f)
 	{
-		if (target.x < position.x && mid >= position.x)
+		if (min < position.x && mid >= position.x)
 		{
 			isHit = true;
-			return;
+			isMiss = false;
 		}
 
 		if (mid < position.x)
@@ -40,10 +43,10 @@ void ChildNode::MoveToCenter(Vector2 target, float deltaTime, bool& isMiss, bool
 	// right
 	else if (speed < 0.0f)
 	{
-		if (target.x > position.x && mid <= position.x)
+		if (max > position.x && mid <= position.x)
 		{
 			isHit = true;
-			return;
+			isMiss = false;
 		}
 		if (mid > position.x)
 		{
@@ -54,10 +57,9 @@ void ChildNode::MoveToCenter(Vector2 target, float deltaTime, bool& isMiss, bool
 	if (mid == position.x)
 	{
 		isMiss = true;
-		return;
+		isHit = false;
 	}
 
 	xPosition += speed * deltaTime;
 	position.x = std::round(xPosition);
 }
-

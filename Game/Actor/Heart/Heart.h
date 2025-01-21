@@ -21,6 +21,17 @@ public:
 	virtual void Draw() override;
 
 	static Heart& Get();
+
+	void SetHit(bool hit);
+
+	void SetMiss(bool miss);
+
+	const bool HIT();
+
+	const bool MISS();
+public:
+
+
 private:
 	List<HeartPart*> heartParts;
 
@@ -29,4 +40,10 @@ private:
 	float bpm;
 
 	static Heart* instance;
+
+	bool cur_hit = false;
+	bool pre_hit = false;
+	bool cur_miss = false;
+	bool pre_miss = false;
+	bool isCanMove = true;
 };

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Actor/DrawableActor.h"
+#include "Engine/Timer.h"
 
 class GameLevel;
 class MoveableActor : public DrawableActor
@@ -8,15 +9,24 @@ class MoveableActor : public DrawableActor
 	RTTI_DECLARATIONS(MoveableActor, DrawableActor)
 
 public:
-	MoveableActor();
+	MoveableActor(GameLevel* level);
 	~MoveableActor();
 
-	void Move(Vector2 target);
+	virtual void MoveOrAttack(Vector2 target);
 
 	//int GetHP();
 public:
-	//int HP = 0;
+	const int HP() { return hp; }
 	
-private:
+	void Attack(MoveableActor& other);
 
+	void Attacked(int damage);
+
+protected:
+
+	GameLevel* reflevel = nullptr;
+
+	int hp = 3;
+
+	int damage = 0;
 };

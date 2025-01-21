@@ -63,10 +63,17 @@ void Heart::Update(float deltaTime)
 		Beat.SetTime(oneStep);
 	}*/
 
+	// 프레임 업데이트 시 하는 그거
+	//pre_miss = cur_miss;
+	//pre_hit = cur_hit;
+
+
 	for (auto& part : heartParts)
 	{
 		part->Beat(isBeat);
 	}
+
+	
 }
 
 void Heart::Draw()
@@ -79,5 +86,31 @@ void Heart::Draw()
 
 Heart& Heart::Get()
 {
+	if (instance == nullptr)
+	{
+		instance = new Heart({ Game::Get().ScreenSize().x / 2, Game::Get().ScreenSize().y - 3 }, 60.0f);
+	}
 	return *instance;
+}
+
+void Heart::SetHit(bool hit)
+{
+	
+	
+	this->cur_hit = hit;
+}
+
+void Heart::SetMiss(bool miss)
+{
+	this->cur_miss = miss;
+}
+
+const bool Heart::HIT()
+{
+	return cur_hit;
+}
+
+const bool Heart::MISS()
+{
+	return cur_miss;
 }

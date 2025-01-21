@@ -18,7 +18,7 @@ public:
 
 private:
 	float nodeSpeed = 0.0f;
-	Vector2 target;
+	int target;
 	bool isHit = false;
 	bool isMiss = false;
 

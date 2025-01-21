@@ -11,7 +11,7 @@ public:
 
 	virtual void Draw() override;
 
-	void MoveToCenter(Vector2 target, float deltaTime, bool& isMiss, bool& isHit);
+	void MoveToCenter(int target, float deltaTime, bool& isMiss, bool& isHit);
 
 private:
 	float speed = 0.0f;

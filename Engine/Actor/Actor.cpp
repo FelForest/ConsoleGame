@@ -38,3 +38,5 @@ void Actor::SetIsVisible(bool active)
 {
 	isVisible = active;
 }
+
+

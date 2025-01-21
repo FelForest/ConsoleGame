@@ -18,6 +18,8 @@ class Player;
 // 몬스터
 class Monster;
 
+class Slime;
+
 // 필드
 class Map;
 // 벽
@@ -46,7 +48,11 @@ public:
 
 	void AddMoveActor(MoveableActor* newMoveActor);
 
+	void AddMonster(Monster* newMonster);
+
 	bool CheckCanMove(Vector2 target);
+
+	const List<MoveableActor*>& GetMoveables();
 
 private:
 	bool CheckGameOver();
@@ -59,4 +65,7 @@ private:
 	Vector2 heartAndNotePosition;
 
 	List<MoveableActor*> moveables;
+	List<Monster*> monsters;
+
+	Player* player = nullptr;
 };
