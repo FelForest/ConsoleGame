@@ -12,6 +12,7 @@ class ChildNode;
 // 라이프
 
 // 움직이는 액터
+class MoveableActor;
 // 플레이어
 class Player;
 // 몬스터
@@ -43,6 +44,10 @@ public:
 
 	virtual void Draw() override;
 
+	void AddMoveActor(MoveableActor* newMoveActor);
+
+	bool CheckCanMove(Vector2 target);
+
 private:
 	bool CheckGameOver();
 
@@ -50,4 +55,8 @@ private:
 	bool isGameOver = false;
 	float bpm = 60.0f;
 	float spawnTime = 60.0f / bpm;
+
+	Vector2 heartAndNotePosition;
+
+	List<MoveableActor*> moveables;
 };

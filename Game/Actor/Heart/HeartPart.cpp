@@ -1,21 +1,31 @@
 #include "HeartPart.h"
+#include "Engine/Timer.h"
+#include "Game/Game.h"
 
-HeartPart::HeartPart()
+HeartPart::HeartPart(Vector2 position)
 	: DrawableActor("@")
-{
-
+{ 
+	this->position = position;
 }
 
 HeartPart::~HeartPart()
 {
 }
 
-void HeartPart::Update(float deltaTime)
+// 호출은 Heart에서 할거임
+void HeartPart::Beat(bool isBeat)
 {
-	Super::Update(deltaTime);
+	this->isBeat = isBeat;
 }
 
 void HeartPart::Draw()
 {
-	Super::Draw();
+	if (isBeat)
+	{
+		Game::Get().Draw(position, "@", Color::BrightRed);
+	}
+	else
+	{
+		Game::Get().Draw(position, "@", Color::BrightBlue);
+	}
 }

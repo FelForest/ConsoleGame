@@ -102,6 +102,7 @@
       <AdditionalDependencies>winmm.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>
       </AdditionalLibraryDirectories>
+      <UACExecutionLevel>AsInvoker</UACExecutionLevel>
     </Link>
     <PreBuildEvent>
       <Command>xcopy $(ProjectDir)\*.h $(SolutionDir)\Includes\ /e /y</Command>
@@ -156,6 +157,7 @@ xcopy $(OutDir)\*.lib $(SolutionDir)\Lib\ /e /y</Command>
       <AdditionalDependencies>winmm.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>
       </AdditionalLibraryDirectories>
+      <UACExecutionLevel>AsInvoker</UACExecutionLevel>
     </Link>
     <PreBuildEvent>
       <Command>xcopy $(ProjectDir)\*.h $(SolutionDir)\Includes\ /e /y</Command>

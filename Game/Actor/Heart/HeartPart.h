@@ -7,14 +7,12 @@ class HeartPart : public DrawableActor
 	RTTI_DECLARATIONS(HeartPart, DrawableActor)
 
 public:
-	HeartPart();
+	HeartPart(Vector2 position);
 	~HeartPart();
 
-	virtual void Update(float deltaTime) override;
+	void Beat(bool isBeat);
 
 	virtual void Draw() override;
-
 private:
-
-
+	bool isBeat = false;
 };

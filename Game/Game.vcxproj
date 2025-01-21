@@ -99,6 +99,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>Engine.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)\Lib\;</AdditionalLibraryDirectories>
+      <UACExecutionLevel>AsInvoker</UACExecutionLevel>
     </Link>
     <PostBuildEvent>
       <Command>xcopy $(SolutionDir)\Lib\Engine.dll $(OutDir)\ /y</Command>
@@ -145,6 +146,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>Engine.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)\Lib\;</AdditionalLibraryDirectories>
+      <UACExecutionLevel>AsInvoker</UACExecutionLevel>
     </Link>
     <PostBuildEvent>
       <Command>xcopy $(SolutionDir)\Lib\Engine.dll $(OutDir)\ /y</Command>

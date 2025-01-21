@@ -16,37 +16,48 @@ void ChildNode::Draw()
 		return;
 	}
 	// 상속 받는데 뭐가 문제일까
-	Super::Draw();
+	//Super::Draw();
 	Game::Get().Draw(position, image, Color::BrightYellow);
 }
 
-bool ChildNode::MoveToCenter(int target, float deltaTime)
+void ChildNode::MoveToCenter(Vector2 target, float deltaTime, bool& isMiss, bool& isHit)
 {
+	static int mid = (target.x + target.y) / 2;
 	// left
 	if (speed > 0.0f)
 	{
-		if (target < position.x)
+		if (target.x < position.x && mid >= position.x)
 		{
-			position.x = target;
+			isHit = true;
+			return;
+		}
+
+		if (mid < position.x)
+		{
+			position.x = mid;
 		}
 	}
 	// right
 	else if (speed < 0.0f)
 	{
-		if (target > position.x)
+		if (target.x > position.x && mid <= position.x)
 		{
-			position.x = target;
+			isHit = true;
+			return;
+		}
+		if (mid > position.x)
+		{
+			position.x = mid;
 		}
 	}
 
-	if (target == position.x)
+	if (mid == position.x)
 	{
-		return true;
+		isMiss = true;
+		return;
 	}
 
 	xPosition += speed * deltaTime;
 	position.x = std::round(xPosition);
-
-	return false;
 }
 

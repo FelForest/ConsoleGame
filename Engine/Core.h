@@ -13,12 +13,12 @@ enum class Color : unsigned short
 	Red = FOREGROUND_RED,
 	Green = FOREGROUND_GREEN,
 	Blue = FOREGROUND_BLUE,
-	White = Red + Green + Blue,
-	Yellow = Green + Red,
-	BrightYellow = Yellow + FOREGROUND_INTENSITY,
-	BrightRed = Red + FOREGROUND_INTENSITY,
-	BrightBlue = Blue + FOREGROUND_INTENSITY,
-	BrightGreen = Green + FOREGROUND_INTENSITY,
+	White = Red | Green | Blue,
+	Yellow = Green | Red,
+	BrightYellow = Yellow | FOREGROUND_INTENSITY,
+	BrightRed = Red | FOREGROUND_INTENSITY,
+	BrightBlue = Blue | FOREGROUND_INTENSITY,
+	BrightGreen = Green | FOREGROUND_INTENSITY,
 };
 
 // 커서의 종류를 설정할 때 사용할 열거형.
