@@ -42,6 +42,7 @@ void Node::Update(float deltaTime)
     Super::Update(deltaTime);
 
     isHit = false;
+    isMiss = false;
 
     for (int ix = 0; ix < noteCount * 2; ++ix)
     {
@@ -65,26 +66,32 @@ void Node::Update(float deltaTime)
         for (auto& child : children)
         {
             child->SetIsVisible(false);
-            //Destroy();
+
         }
 
+        
         Heart::Get().SetHit(true);
     }
 
+    if (!isMiss)
+    {
+        Heart::Get().SetMiss(false);
+        for (int ix = 0; ix < noteCount * 2; ++ix)
+        {
+            isMisses[ix] = false;
+        }
+    }
+    
     if (isMiss)
     {
+        //OutputDebugStringA("A");
+        //OutputDebugStringA("D");
         //Heart::Get().SetBeat(true);
-        Heart::Get().Update(deltaTime);
-        Heart::Get().SetMiss(true);
         Heart::Get().SetHit(false);
-        static Timer timer(0.15f);
-        timer.Update(deltaTime);
-        if (timer.IsTimeOut())
-        {
-            isMiss = false;
-            Destroy();
-            //Heart::Get().SetBeat(false);
-        }
+        Heart::Get().SetMiss(true);
+        Heart::Get().Update(deltaTime);
+        isMiss = false;
+        Destroy();
     }
     
     

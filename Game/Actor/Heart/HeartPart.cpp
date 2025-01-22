@@ -23,11 +23,11 @@ void HeartPart::Draw()
 	if (isBeat)
 	{
 		Game::Get().Draw(position, "@", Color::BrightRed);
-		OutputDebugStringA("a\n");
+		//OutputDebugStringA("a\n");
 	}
 	else
 	{
 		Game::Get().Draw(position, "@", Color::BrightBlue);
-		OutputDebugStringA("b\n");
+		//OutputDebugStringA("b\n");
 	}
 }

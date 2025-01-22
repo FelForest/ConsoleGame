@@ -15,6 +15,8 @@ public:
 	virtual void Draw() override;
 	virtual void SetPosition(const Vector2& newPosition) override;
 
+	inline void ChangeImage(const char* image);
+
 	// 충돌 확인 함수.
 	bool Intersect(const DrawableActor& other);
 

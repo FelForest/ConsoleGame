@@ -49,6 +49,15 @@ void DrawableActor::SetPosition(const Vector2& newPosition)
 	Super::SetPosition(newPosition);
 }
 
+inline void DrawableActor::ChangeImage(const char* cahngeImage)
+{
+	delete[] image;
+	image = nullptr;
+	auto length = strlen(cahngeImage) + 1;
+	this->image = new char[length];
+	strcpy_s(this->image, length, cahngeImage);
+}
+
 bool DrawableActor::Intersect(const DrawableActor& other)
 {
 	// AABB(Axis Aligned Bounding Box).

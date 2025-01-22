@@ -183,10 +183,6 @@
   <ItemGroup>
     <ClCompile Include="Actor\Heart\Heart.cpp" />
     <ClCompile Include="Actor\Heart\HeartPart.cpp" />
-    <ClCompile Include="Actor\MoveableActor\Monster\Monster.cpp" />
-    <ClCompile Include="Actor\MoveableActor\Monster\Slime.cpp" />
-    <ClCompile Include="Actor\MoveableActor\MoveableActor.cpp" />
-    <ClCompile Include="Actor\MoveableActor\Player.cpp" />
     <ClCompile Include="Actor\Node\ChildNode.cpp" />
     <ClCompile Include="Actor\Node\Node.cpp" />
     <ClCompile Include="Game\Game.cpp" />
@@ -196,11 +192,6 @@
   <ItemGroup>
     <ClInclude Include="Actor\Heart\Heart.h" />
     <ClInclude Include="Actor\Heart\HeartPart.h" />
-    <ClInclude Include="Actor\MoveableActor\Monster\Monster.h" />
-    <ClInclude Include="Actor\MoveableActor\Monster\Slime.h" />
-    <ClInclude Include="Actor\MoveableActor\Monster\헤더.h" />
-    <ClInclude Include="Actor\MoveableActor\MoveableActor.h" />
-    <ClInclude Include="Actor\MoveableActor\Player.h" />
     <ClInclude Include="Actor\Node\ChildNode.h" />
     <ClInclude Include="Actor\Node\Node.h" />
     <ClInclude Include="Game\Game.h" />

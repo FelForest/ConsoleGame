@@ -26,13 +26,29 @@ void ChildNode::MoveToCenter(int target, float deltaTime, bool& isMiss, bool& is
 	static int mid = Heart::Get().Position().x;
 	int min = mid - target / 2;
 	int max = mid + target / 2;
+
+	if (mid == position.x)
+	{
+		isMiss = true;
+		isHit = false;
+		return;
+	}
+
+	xPosition += speed * deltaTime;
+	position.x = std::round(xPosition);
+
+	/*char buffer[1024];
+	snprintf(buffer, 1024, "%d \n" , position.x);
+	OutputDebugStringA(buffer);*/
+
 	// left
 	if (speed > 0.0f)
 	{
-		if (min < position.x && mid >= position.x)
+		if (min < position.x &&  position.x <= mid)
 		{
 			isHit = true;
 			isMiss = false;
+			
 		}
 
 		if (mid < position.x)
@@ -40,10 +56,11 @@ void ChildNode::MoveToCenter(int target, float deltaTime, bool& isMiss, bool& is
 			position.x = mid;
 		}
 	}
+
 	// right
 	else if (speed < 0.0f)
 	{
-		if (max > position.x && mid <= position.x)
+		if (mid <= position.x && position.x < max )
 		{
 			isHit = true;
 			isMiss = false;
@@ -53,13 +70,4 @@ void ChildNode::MoveToCenter(int target, float deltaTime, bool& isMiss, bool& is
 			position.x = mid;
 		}
 	}
-
-	if (mid == position.x)
-	{
-		isMiss = true;
-		isHit = false;
-	}
-
-	xPosition += speed * deltaTime;
-	position.x = std::round(xPosition);
 }

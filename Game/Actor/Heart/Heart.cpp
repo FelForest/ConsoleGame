@@ -52,6 +52,7 @@ void Heart::Update(float deltaTime)
 {
 	Super::Update(deltaTime);
 	
+	
 	//static float oneStep = (60 / bpm) / 4;
 	// bpm 한번에 한번 뛰기 -> 실패!
 	/*static Timer Beat(oneStep);
@@ -73,7 +74,9 @@ void Heart::Update(float deltaTime)
 		part->Beat(isBeat);
 	}
 
-	
+	pre_miss = cur_miss;
+	pre_hit = cur_hit;
+
 }
 
 void Heart::Draw()
@@ -95,13 +98,13 @@ Heart& Heart::Get()
 
 void Heart::SetHit(bool hit)
 {
-	
-	
 	this->cur_hit = hit;
+	
 }
 
 void Heart::SetMiss(bool miss)
 {
+	//OutputDebugStringA("A");
 	this->cur_miss = miss;
 }
 

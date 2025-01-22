@@ -6,34 +6,38 @@
 #include "Actor/Node/Node.h"
 #include "Actor/Heart/Heart.h"
 #include "Actor/MoveableActor/MoveableActor.h"
-#include "Actor/MoveableActor/Player.h"
+#include "Actor/MoveableActor/Player/Player.h"
 #include "Actor/MoveableActor/Monster/Slime.h"
+#include "Actor/MoveableActor/Monster/Zombie.h"
 
 GameLevel::GameLevel()
 {
-    heartAndNotePosition = { (Game::Get().ScreenSize().x / 2), (Game::Get().ScreenSize().y - 3) };
+    heartAndNotePosition = { ((Game::Get().ScreenSize().x / 2)), (Game::Get().ScreenSize().y - 3) };
     
     Heart* heart = new Heart(heartAndNotePosition, bpm);
     AddActor(heart);
 
-    player = new Player({ heartAndNotePosition.x , Game::Get().ScreenSize().y / 2 }, this);
+    player = new Player("P", { heartAndNotePosition.x, Game::Get().ScreenSize().y / 2 }, this);
     AddActor(player);
     AddMoveActor(player);
+    
 
-    //Slime* slime = new Slime("S", { 3, 5 }, this);
-    //AddActor(slime);
-    //AddMoveActor(slime);
-    //AddMonster(slime);
+    Slime* slime = new Slime({ heartAndNotePosition.x - 1, Game::Get().ScreenSize().y / 2 }, this);
+    actors.PushBack(slime);
+    AddMoveActor(slime);
+    AddMonster(slime);
 
-}
-
-GameLevel::~GameLevel()
-{
+    Zombie* zombie = new Zombie({ heartAndNotePosition.x - 2, Game::Get().ScreenSize().y / 2 - 1 }, this);
+    actors.PushBack(zombie);
+    AddMoveActor(zombie);
+    AddMonster(zombie);
 }
 
 void GameLevel::Update(float deltaTime)
 {
     Super::Update(deltaTime);
+
+    CanMove = false;
 
     // 스테이지 제한 시간
     /*static Timer gameOver(20.0f);
@@ -52,12 +56,20 @@ void GameLevel::Update(float deltaTime)
     timer.Update(deltaTime);
     if(timer.IsTimeOut())
     {
+        
         // TODO : 이거 고처야함
         Node* node = new Node(heartAndNotePosition, nodeSpeed);
-        AddActor(node);
+        actors.PushBack(node);
         timer.Reset();
         timer.SetTime(spawnTime / 2);
+        CanMove = true;
     }
+
+    if (Heart::Get().HIT())
+    {
+        //OutputDebugStringA("D\n");
+    }
+
 
 }
 

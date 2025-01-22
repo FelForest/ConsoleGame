@@ -74,3 +74,9 @@ void Level::Draw()
 		actor->Draw();
 	}
 }
+
+const List<Actor*>& Level::GetActors()
+{
+	return actors;
+}
+

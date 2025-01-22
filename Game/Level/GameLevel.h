@@ -40,7 +40,6 @@ class GameLevel : public Level
 
 public:
 	GameLevel();
-	~GameLevel();
 
 	virtual void Update(float deltaTime) override;
 
@@ -53,6 +52,9 @@ public:
 	bool CheckCanMove(Vector2 target);
 
 	const List<MoveableActor*>& GetMoveables();
+
+public:
+	bool CanMove = false;
 
 private:
 	bool CheckGameOver();
