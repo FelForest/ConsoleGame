@@ -31,7 +31,6 @@ public:
 	const bool MISS();
 public:
 
-
 private:
 	List<HeartPart*> heartParts;
 

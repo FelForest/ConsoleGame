@@ -50,6 +50,11 @@ void Heart::SetBeat(bool isBeat)
 
 void Heart::Update(float deltaTime)
 {
+	if (Game::Get().GetKeyDown(VK_ESCAPE))
+	{
+		Game::Get().QuitGame();
+	}
+
 	Super::Update(deltaTime);
 	
 	

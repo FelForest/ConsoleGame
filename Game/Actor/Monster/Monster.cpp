@@ -6,11 +6,18 @@
 Monster::Monster(Vector2 position, GameLevel* level)
 	: DrawableActor()
 {
-	this->position;
+	this->position = position;
 	reflevel = level;
 
 	this->player = reflevel->player;
 	monsters = reflevel->GetMonsters();
+
+	MonsterCount++;
+}
+
+Monster::Monster()
+{
+	this->position = { 0,0 };
 }
 
 Monster::~Monster()
@@ -38,6 +45,7 @@ void Monster::Attack(int damage)
 void Monster::Update(float deltaTime)
 {
 	Super::Update(deltaTime);
+	//OutputDebugStringA("Monster");
 }
 
 void Monster::Draw()

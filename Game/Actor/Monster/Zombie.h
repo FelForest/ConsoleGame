@@ -2,14 +2,14 @@
 
 #include "Monster.h"
 
-class Slime : public Monster
+class Zombie : public Monster
 {
-	RTTI_DECLARATIONS(Slime, Monster)
+	RTTI_DECLARATIONS(Zombie, Monster)
 
 public:
-	Slime(const Vector2& position, GameLevel* level, bool isUP);
+	Zombie(const Vector2& position, GameLevel* level);
 
-	~Slime();
+	~Zombie();
 
 	virtual void Update(float deltaTime);
 
@@ -26,11 +26,11 @@ protected:
 
 
 private:
-	int slime_hp = 2;
-	int slime_damage = 1;
-	int slime_maxhp = 2;
-	int slime_count = 3;
+	int zombie_hp = 4;
+	int zombie_damage = 1;
+	int zombie_maxhp = 4;
+	int zombie_count = 2;
 
-	bool slime_can_move = true;
-	bool isUp = true;
+	bool zombie_can_move = true;
+	bool isMove = false;
 };

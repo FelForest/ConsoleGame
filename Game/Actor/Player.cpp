@@ -38,6 +38,7 @@ void Player::Move()
 void Player::Attack(Monster* other, int damage)
 {
 	other->Attacked(damage);
+	OutputDebugStringA("Attack \n");
 }
 
 void Player::Attacked(int damage)
@@ -69,6 +70,13 @@ void Player::Update(float deltaTime)
 void Player::Draw()
 {
 	Super::Draw();
+
+	if (player_hp == 0)
+	{
+		Destroy();
+		return;
+	}
+
 	if (player_hp == player_maxhp)
 	{
 		Game::Get().Draw(position, this->image, Color::BrightGreen);
@@ -81,6 +89,21 @@ void Player::Draw()
 	{
 		Game::Get().Draw(position, this->image, Color::Red);
 	}
+
+	for (int ix = 0; ix < player_maxhp; ++ix)
+	{
+		if (ix < player_hp)
+		{
+			Game::Get().Draw({ 3, 3 + ix }, "\u2665", Color::Red);
+		}
+		else
+		{
+			Game::Get().Draw({ 3, 3 + ix }, "\u2661", Color::Red);
+		}
+		
+	}
+
+	//OutputDebugStringA("Player Draw \n");
 }
 
 void Player::ProcessMove(Vector2 target)
@@ -93,13 +116,20 @@ void Player::ProcessMove(Vector2 target)
 	}
 
 	// 몬스터들 확인하면 끝
-	for (auto& monster : reflevel->GetMonsters())
+	for (auto& actor : reflevel->GetActors())
 	{
+		Monster* monster = actor->As<Monster>();
+		if (monster == nullptr)
+		{
+			continue;
+		}
+
 		if (target != monster->Position())
 		{
 			continue;
 		}
 		// 공격
 		Attack(monster, player_damage);
+		return;
 	}
 }

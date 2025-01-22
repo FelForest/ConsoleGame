@@ -10,24 +10,79 @@
 
 #include "Actor/Monster/Monster.h"
 #include "Actor/Monster/Slime.h"
+#include "Actor/Monster/Zombie.h"
+
+#include "Actor/Map/Wall.h"
+#include "Actor/Map/Ground.h"
+
 
 GameLevel::GameLevel()
 {
+    
     heartAndNotePosition = { ((Game::Get().ScreenSize().x / 2)), (Game::Get().ScreenSize().y - 3) };
     
     Heart* heart = new Heart(heartAndNotePosition, bpm);
     AddActor(heart);
 
-    player = new Player({ ((Game::Get().ScreenSize().x / 2)), (Game::Get().ScreenSize().y / 2) }, this);
-    AddActor(player);
+    // 맵 추가
+    for (int ix = 0; ix < 10; ++ix)
+    {
+        for (int jx = 0; jx < 10; ++jx)
+        {
+            Vector2 position = { (Game::Get().ScreenSize().x / 2) - 5 + ix , (Game::Get().ScreenSize().y / 2) - 5 + jx};
+            actors.PushBack(new Ground(position));
+        }
+    }
 
-    Slime* slime = new Slime({ ((Game::Get().ScreenSize().x / 2)), (Game::Get().ScreenSize().y / 2) - 2 }, this);
-    AddActor(slime);
-    AddMonster(slime);
+    for (int ix = 0; ix < 12; ++ix)
+    {
+        for (int jx = 0; jx < 12; ++jx)
+        {
+            if (jx == 0 || jx == 11)
+            {
+                Vector2 position = { (Game::Get().ScreenSize().x / 2) - 6 + ix , (Game::Get().ScreenSize().y / 2) - 6 + jx };
+                actors.PushBack(new Wall(position));
+            }
+            else
+            {
+                if (ix == 0 || ix == 11)
+                {
+                    Vector2 position = { (Game::Get().ScreenSize().x / 2) - 6 + ix , (Game::Get().ScreenSize().y / 2) - 6 + jx };
+                    actors.PushBack(new Wall(position));
+                }
+                
+            }
+            
+        }
+    }
+
+    player = new Player({ ((Game::Get().ScreenSize().x / 2)), (Game::Get().ScreenSize().y / 2) }, this);
+    actors.PushBack(player);
+
+    
+
+
+    // 슬라임 추가
+    /*Slime* slime = new Slime({ ((Game::Get().ScreenSize().x / 2) - 1), (Game::Get().ScreenSize().y / 2) - 2 }, this, false);
+    actors.PushBack(slime);
+
+    Slime* slime3 = new Slime({ ((Game::Get().ScreenSize().x / 2) - 1), (Game::Get().ScreenSize().y / 2) - 4 }, this, false);
+    actors.PushBack(slime3);*/
+
+
+    //AddMonster(slime1);
 }
 
 void GameLevel::Update(float deltaTime)
 {
+    /*for (int ix = 0; ix < monsters.Size(); ++ix)
+    {
+        if (monsters[ix]->isExpired)
+        {
+            monsters.Erase(ix);
+        }
+    }*/
+
     Super::Update(deltaTime);
 
     CanMove = false;
@@ -43,20 +98,71 @@ void GameLevel::Update(float deltaTime)
     // 하트 추가
     
 
-    static Timer timer(spawnTime);
+    static Timer HeartTimer(spawnTime);
     static float nodeSpeed = ((Game::Get().ScreenSize().x / 2) - 1) / spawnTime;
-
-    timer.Update(deltaTime);
-    if(timer.IsTimeOut())
+    HeartTimer.Update(deltaTime);
+    if(HeartTimer.IsTimeOut())
     {
         
         // TODO : 이거 고처야함
         Node* node = new Node(heartAndNotePosition, nodeSpeed);
         actors.PushBack(node);
-        timer.Reset();
-        timer.SetTime(spawnTime / 2);
+        HeartTimer.Reset();
+        HeartTimer.SetTime(spawnTime / 2);
         CanMove = true;
+
     }
+
+    int monster_count = 0;
+    for (auto* actor : actors)
+    {
+        if (actor->As<Monster>())
+        {
+            if (actor->IsAcive())
+            {
+                monster_count++;
+            }
+        }
+    }
+
+    static Timer MonsterSpawnTimer(spawnTime * 2);
+    MonsterSpawnTimer.Update(deltaTime);
+
+    if (MonsterSpawnTimer.IsTimeOut() && monster_count < 5)
+    {
+        int count = Random(0, 3);
+
+        for (int ix = 0; ix < count; ++ix)
+        {
+            Vector2 position = Vector2(Random((Game::Get().ScreenSize().x / 2) - 5, (Game::Get().ScreenSize().x / 2) + 4), Random((Game::Get().ScreenSize().y / 2) - 5, (Game::Get().ScreenSize().y / 2) + 4));
+
+            if (!CheckCanMove(position))
+            {
+                continue;
+            }
+
+            int type = Random(0, 1);
+
+            if (type == 0)
+            {
+                AddActor(new Slime(position, this, Random(0, 1)));
+            }
+            else if (type == 1)
+            {
+                AddActor(new Zombie(position, this));
+            }
+
+            monster_count++;
+            if (type == 2)
+            {
+                OutputDebugStringA("2");
+            }
+        }
+
+        MonsterSpawnTimer.Reset();
+        MonsterSpawnTimer.SetTime(spawnTime * Random(2, 4));
+    }
+    
 
     if (Heart::Get().HIT())
     {
@@ -81,12 +187,22 @@ void GameLevel::AddMonster(Monster* newMonster)
 
 bool GameLevel::CheckCanMove(Vector2 target)
 {
-    // 움직이는 액터 확인
-    for (Monster* monster : monsters)
+    for (auto* actor : actors)
     {
-        if (target == monster->Position())
+        if (actor->Position() == target)
         {
-            return false;
+            if (actor->As<Monster>())
+            {
+                return false;
+            }
+            else if (actor->As<Wall>())
+            {
+                return false;
+            }
+            else if (actor->As<Player>())
+            {
+                return false;
+            }
         }
     }
 

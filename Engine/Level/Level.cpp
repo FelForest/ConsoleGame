@@ -31,10 +31,11 @@ void Level::ProcessAddedAndDestroyedActor()
 			delete actors[ix];
 			actors[ix] = nullptr;
 			actors.Erase(ix);
-			continue;
 		}
-
-		++ix;
+		else
+		{
+			++ix;
+		}
 	}
 
 	// 추가 요청된 액터 처리.

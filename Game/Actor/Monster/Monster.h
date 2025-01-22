@@ -11,8 +11,10 @@ class Monster : public DrawableActor
 {
 	RTTI_DECLARATIONS(Monster, DrawableActor)
 
+	friend class GameLevel;
 public:
 	Monster(Vector2 position, GameLevel* level);
+	Monster();
 	~Monster();
 
 	virtual void Attacked(int damage);
@@ -22,6 +24,8 @@ public:
 	virtual void Update(float deltaTime);
 
 	virtual void Draw();
+
+	int MonsterCount = 0;
 protected:
 	GameLevel* reflevel = nullptr;
 
