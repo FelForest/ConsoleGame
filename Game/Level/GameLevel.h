@@ -11,14 +11,13 @@ class Node;
 class ChildNode;
 // 라이프
 
-// 움직이는 액터
-class MoveableActor;
 // 플레이어
 class Player;
 // 몬스터
 class Monster;
 
 class Slime;
+
 
 // 필드
 class Map;
@@ -45,16 +44,15 @@ public:
 
 	virtual void Draw() override;
 
-	void AddMoveActor(MoveableActor* newMoveActor);
-
 	void AddMonster(Monster* newMonster);
 
 	bool CheckCanMove(Vector2 target);
 
-	const List<MoveableActor*>& GetMoveables();
-
+	const List<Monster*>& GetMonsters();
 public:
 	bool CanMove = false;
+
+	Player* player = nullptr;
 
 private:
 	bool CheckGameOver();
@@ -66,8 +64,5 @@ private:
 
 	Vector2 heartAndNotePosition;
 
-	List<MoveableActor*> moveables;
 	List<Monster*> monsters;
-
-	Player* player = nullptr;
 };

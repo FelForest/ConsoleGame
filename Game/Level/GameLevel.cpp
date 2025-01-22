@@ -5,10 +5,11 @@
 #include "Actor/Node/ChildNode.h"
 #include "Actor/Node/Node.h"
 #include "Actor/Heart/Heart.h"
-#include "Actor/MoveableActor/MoveableActor.h"
-#include "Actor/MoveableActor/Player/Player.h"
-#include "Actor/MoveableActor/Monster/Slime.h"
-#include "Actor/MoveableActor/Monster/Zombie.h"
+
+#include "Actor/Player.h"
+
+#include "Actor/Monster/Monster.h"
+#include "Actor/Monster/Slime.h"
 
 GameLevel::GameLevel()
 {
@@ -17,20 +18,12 @@ GameLevel::GameLevel()
     Heart* heart = new Heart(heartAndNotePosition, bpm);
     AddActor(heart);
 
-    player = new Player("P", { heartAndNotePosition.x, Game::Get().ScreenSize().y / 2 }, this);
+    player = new Player({ ((Game::Get().ScreenSize().x / 2)), (Game::Get().ScreenSize().y / 2) }, this);
     AddActor(player);
-    AddMoveActor(player);
-    
 
-    Slime* slime = new Slime({ heartAndNotePosition.x - 1, Game::Get().ScreenSize().y / 2 }, this);
-    actors.PushBack(slime);
-    AddMoveActor(slime);
+    Slime* slime = new Slime({ ((Game::Get().ScreenSize().x / 2)), (Game::Get().ScreenSize().y / 2) - 2 }, this);
+    AddActor(slime);
     AddMonster(slime);
-
-    Zombie* zombie = new Zombie({ heartAndNotePosition.x - 2, Game::Get().ScreenSize().y / 2 - 1 }, this);
-    actors.PushBack(zombie);
-    AddMoveActor(zombie);
-    AddMonster(zombie);
 }
 
 void GameLevel::Update(float deltaTime)
@@ -79,10 +72,7 @@ void GameLevel::Draw()
     Heart::Get().Draw();
 }
 
-void GameLevel::AddMoveActor(MoveableActor* newMoveActor)
-{
-    moveables.PushBack(newMoveActor);
-}
+
 
 void GameLevel::AddMonster(Monster* newMonster)
 {
@@ -92,9 +82,9 @@ void GameLevel::AddMonster(Monster* newMonster)
 bool GameLevel::CheckCanMove(Vector2 target)
 {
     // 움직이는 액터 확인
-    for (MoveableActor* actor : moveables)
+    for (Monster* monster : monsters)
     {
-        if (target == actor->Position())
+        if (target == monster->Position())
         {
             return false;
         }
@@ -105,9 +95,9 @@ bool GameLevel::CheckCanMove(Vector2 target)
     return true;
 }
 
-const List<MoveableActor*>& GameLevel::GetMoveables()
+const List<Monster*>& GameLevel::GetMonsters()
 {
-    return moveables;
+    return monsters;
 }
 
 bool GameLevel::CheckGameOver()
