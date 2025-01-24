@@ -17,19 +17,19 @@ Player::~Player()
 
 void Player::Move()
 {
-	if (Game::Get().GetKeyDown(VK_RIGHT))
+	if (Game::Get().GetKeyDown(VK_RIGHT) || Game::Get().GetKeyDown('D') || Game::Get().GetKeyDown('d'))
 	{
 		ProcessMove(Vector2(position.x + 1, position.y));
 	}
-	else if (Game::Get().GetKeyDown(VK_LEFT))
+	else if (Game::Get().GetKeyDown(VK_LEFT) || Game::Get().GetKeyDown('A') || Game::Get().GetKeyDown('a'))
 	{
 		ProcessMove(Vector2(position.x - 1, position.y));
 	}
-	else if (Game::Get().GetKeyDown(VK_UP))
+	else if (Game::Get().GetKeyDown(VK_UP) || Game::Get().GetKeyDown('W') || Game::Get().GetKeyDown('w'))
 	{
 		ProcessMove(Vector2(position.x, position.y - 1));
 	}
-	else if (Game::Get().GetKeyDown(VK_DOWN))
+	else if (Game::Get().GetKeyDown(VK_DOWN) || Game::Get().GetKeyDown('S') || Game::Get().GetKeyDown('s'))
 	{
 		ProcessMove(Vector2(position.x, position.y + 1));
 	}
@@ -95,10 +95,6 @@ void Player::Draw()
 		if (ix < player_hp)
 		{
 			Game::Get().Draw({ 3, 3 + ix }, "\u2665", Color::Red);
-		}
-		else
-		{
-			Game::Get().Draw({ 3, 3 + ix }, "\u2661", Color::Red);
 		}
 		
 	}
