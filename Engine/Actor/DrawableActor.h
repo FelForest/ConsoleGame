@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Actor.h"
 
@@ -17,7 +17,7 @@ public:
 
 	inline void ChangeImage(const char* image);
 
-	// Ãæµ¹ È®ÀÎ ÇÔ¼ö.
+	// ì¶©ëŒ í™•ì¸ í•¨ìˆ˜.
 	bool Intersect(const DrawableActor& other);
 
 	// Getter.
@@ -26,13 +26,13 @@ public:
 
 protected:
 
-	// È­¸é¿¡ ±×¸± ¹®ÀÚ °ª.
+	// í™”ë©´ì— ê·¸ë¦´ ë¬¸ì ê°’.
 	char* image;
 
-	// ³Êºñ(¹®ÀÚ¿­ ±æÀÌ).
+	// ë„ˆë¹„(ë¬¸ìì—´ ê¸¸ì´).
 	int width = 0;
 
-	// »ö»ó °ª.
+	// ìƒ‰ìƒ ê°’.
 	Color color = Color::White;
 
 	

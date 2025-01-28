@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #pragma warning (disable : 4251)
 
@@ -47,20 +47,25 @@ public:
 
 	void Erase(int index)
 	{
-		// ¿¹¿Ü Ã³¸®.
+		// ì˜ˆì™¸ ì²˜ë¦¬.
 		if (index < 0 || index >= size)
 		{
 			__debugbreak();
 		}
 
-		// »èÁ¦ÇÑ µ¥ÀÌÅÍÀÇ ÀÎµ¦½º ´ÙÀ½ À§Ä¡¸¦ ÇÑÄ­ ¾ÕÀ¸·Î ¸ğµÎ ÀÌµ¿.
+		// ì‚­ì œí•œ ë°ì´í„°ì˜ ì¸ë±ìŠ¤ ë‹¤ìŒ ìœ„ì¹˜ë¥¼ í•œì¹¸ ì•ìœ¼ë¡œ ëª¨ë‘ ì´ë™.
 		for (int ix = index; ix < size - 1; ++ix)
 		{
 			data[ix] = std::move(data[ix + 1]);
 		}
 
-		// »èÁ¦ ÈÄ Å©±â ÁÙÀÌ±â.
+		// ì‚­ì œ í›„ í¬ê¸° ì¤„ì´ê¸°.
 		--size;
+	}
+
+	bool IsEmpty()
+	{
+		return size == 0;
 	}
 
 	int Size() const

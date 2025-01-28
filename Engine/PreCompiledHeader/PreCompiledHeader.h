@@ -1,5 +1,5 @@
-#pragma once
+ï»¿#pragma once
 
-// ¹Ì¸® ÄÄÆÄÀÏµÈ Çì´õ.
+// ë¯¸ë¦¬ ì»´íŒŒì¼ëœ í—¤ë”.
 #include <Windows.h>
 #include <iostream>

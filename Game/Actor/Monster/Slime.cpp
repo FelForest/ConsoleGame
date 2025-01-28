@@ -21,8 +21,9 @@ void Slime::Update(float deltaTime)
 {
 	if (slime_hp == 0)
 	{
-		SetIsVisible(false);
-		SetActive(false);
+		Destroy();
+		//SetIsVisible(false);
+		//SetActive(false);
 
 		MonsterCount--;
 		position = { 0,0 };

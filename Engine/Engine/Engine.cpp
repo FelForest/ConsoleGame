@@ -1,4 +1,4 @@
-#include "PreCompiledHeader.h"
+ï»¿#include "PreCompiledHeader.h"
 
 #include "Engine.h"
 #include <Windows.h>
@@ -11,7 +11,7 @@
 
 #include "Render/ScreenBuffer.h"
 
-// ÄÜ¼Ö Ã¢ ¸Ş½ÃÁö Äİ¹é ÇÔ¼ö.
+// ì½˜ì†” ì°½ ë©”ì‹œì§€ ì½œë°± í•¨ìˆ˜.
 BOOL WINAPI MessageProcessor(DWORD message)
 {
 	switch (message)
@@ -25,140 +25,153 @@ BOOL WINAPI MessageProcessor(DWORD message)
 	}
 }
 
-// ½ºÅÂÆ½ º¯¼ö ÃÊ±âÈ­.
+// ìŠ¤íƒœí‹± ë³€ìˆ˜ ì´ˆê¸°í™”.
 Engine* Engine::instance = nullptr;
 
 Engine::Engine()
-	: quit(false), mainLevel(nullptr), screenSize(120, 25) // ÃßÈÄ ÄÜ¼Ö »çÀÌÁî ¹Ş¾Æ¿Í¼­ º¸³»¾ß ÇÒµí
+	: quit(false), mainLevel(nullptr), screenSize(120, 25) // ì¶”í›„ ì½˜ì†” ì‚¬ì´ì¦ˆ ë°›ì•„ì™€ì„œ ë³´ë‚´ì•¼ í• ë“¯
 {
-	// ·£´ı ½Ãµå ¼³Á¤.
+	// ëœë¤ ì‹œë“œ ì„¤ì •.
 	srand((unsigned int)time(nullptr));
 
-	// ½Ì±ÛÅæ °´Ã¼ ¼³Á¤.
+	// ì‹±ê¸€í†¤ ê°ì²´ ì„¤ì •.
 	instance = this;
 
-	// ±âº» Å¸°Ù ÇÁ·¹ÀÓ ¼Óµµ ¼³Á¤.
+	// ê¸°ë³¸ íƒ€ê²Ÿ í”„ë ˆì„ ì†ë„ ì„¤ì •.
 	SetTargetFrameRate(60.0f);
 
-	// È­¸é ¹öÆÛ ÃÊ±âÈ­.
-	// 1. ¹öÆÛ Å©±â ÇÒ´ç.
-	imageBuffer = new CHAR_INFO[(screenSize.x + 1) * screenSize.y + 1];
+	// í™”ë©´ ë²„í¼ ì´ˆê¸°í™”.
+	imageBuffer = new CHAR_INFO*[screenSize.y];
+	// 1. ë²„í¼ í¬ê¸° í• ë‹¹.
+	for (int ix = 0; ix < screenSize.y; ++ix)
+	{
+		imageBuffer[ix] = new CHAR_INFO[screenSize.x];
+	}
+	
+	// ì§€ìš¸ ë²„í¼ í• ë‹¹
+	charInfo = new CHAR_INFO[screenSize.x * screenSize.y];
 
-	// ¹öÆÛ ÃÊ±âÈ­.
+	// ë²„í¼ ì´ˆê¸°í™”.
 	ClearImageBuffer();
 
-	// µÎ °³ÀÇ ¹öÆÛ »ı¼º (¹öÆÛ¸¦ ¹ø°¥¾Æ »ç¿ëÇÏ±â À§ÇØ-´õºí ¹öÆÛ¸µ).
+	// ë‘ ê°œì˜ ë²„í¼ ìƒì„± (ë²„í¼ë¥¼ ë²ˆê°ˆì•„ ì‚¬ìš©í•˜ê¸° ìœ„í•´-ë”ë¸” ë²„í¼ë§).
 	COORD size = { (short)screenSize.x, (short)screenSize.y };
 	renderTargets[0] = new ScreenBuffer(GetStdHandle(STD_OUTPUT_HANDLE), size);
 	renderTargets[1] = new ScreenBuffer(size);
 
-	// ½º¿Ò ¹öÆÛ.
+	// ìŠ¤ì™‘ ë²„í¼.
 	Present();
 
-	// ÄÜ¼Ö Ã¢ ÀÌº¥Æ® Äİ¹é ÇÔ¼ö µî·Ï.
+	// ì½˜ì†” ì°½ ì´ë²¤íŠ¸ ì½œë°± í•¨ìˆ˜ ë“±ë¡.
 	SetConsoleCtrlHandler(MessageProcessor, true);
 }
 
 Engine::~Engine()
 {
-	// ¸ŞÀÎ ·¹º§ ¸Ş¸ğ¸® ÇØÁ¦.
-	if (mainLevel != nullptr)
+	// ë©”ì¸ ë ˆë²¨ ë©”ëª¨ë¦¬ í•´ì œ.
+	SafeDelete(mainLevel);
+	
+
+	// í´ë¦¬ì–´ ë²„í¼ ì‚­ì œ.
+	for (int ix = 0; ix < screenSize.y; ++ix)
 	{
-		delete mainLevel;
+		SafeDelete(imageBuffer[ix]);
 	}
+	SafeDelete(imageBuffer);
 
-	// Å¬¸®¾î ¹öÆÛ »èÁ¦.
-	delete[] imageBuffer;
+	
 
-	// È­¸é ¹öÆÛ »èÁ¦.
-	delete renderTargets[0];
-	delete renderTargets[1];
+	// í™”ë©´ ë²„í¼ ì‚­ì œ.
+	SafeDelete(renderTargets[0]);
+	SafeDelete(renderTargets[1]);
+	SafeDelete(charInfo);
 }
 
 void Engine::Run()
 {
-	// ½ÃÀÛ Å¸ÀÓ ½ºÅÆÇÁ ÀúÀå.
-	// timeGetTime ÇÔ¼ö´Â ¹Ğ¸®¼¼ÄÁµå(1/1000ÃÊ) ´ÜÀ§.
+	// ì‹œì‘ íƒ€ì„ ìŠ¤íƒ¬í”„ ì €ì¥.
+	// timeGetTime í•¨ìˆ˜ëŠ” ë°€ë¦¬ì„¸ì»¨ë“œ(1/1000ì´ˆ) ë‹¨ìœ„.
 	//unsigned long currentTime = timeGetTime();
 	//unsigned long previousTime = 0;
 
-	// CPU ½Ã°è »ç¿ë.
-	// ½Ã½ºÅÛ ½Ã°è -> °íÇØ»óµµ Ä«¿îÅÍ. (10000000).
-	// ¸ŞÀÎº¸µå¿¡ ½Ã°è°¡ ÀÖÀ½.
+	// CPU ì‹œê³„ ì‚¬ìš©.
+	// ì‹œìŠ¤í…œ ì‹œê³„ -> ê³ í•´ìƒë„ ì¹´ìš´í„°. (10000000).
+	// ë©”ì¸ë³´ë“œì— ì‹œê³„ê°€ ìˆìŒ.
 	LARGE_INTEGER frequency;
 	QueryPerformanceFrequency(&frequency);
 
 	//std::cout << "Frequency: " << frequency.QuadPart << "\n";
 
-	// ½ÃÀÛ ½Ã°£ ¹× ÀÌÀü ½Ã°£À» À§ÇÑ º¯¼ö.
+	// ì‹œì‘ ì‹œê°„ ë° ì´ì „ ì‹œê°„ì„ ìœ„í•œ ë³€ìˆ˜.
 	LARGE_INTEGER time;
 	QueryPerformanceCounter(&time);
 
 	int64_t currentTime = time.QuadPart;
 	int64_t previousTime = currentTime;
 
-	// ÇÁ·¹ÀÓ Á¦ÇÑ.
+	// í”„ë ˆì„ ì œí•œ.
 	//float targetFrameRate = 90.0f;
 
-	// ÇÑ ÇÁ·¹ÀÓ ½Ã°£ °è»ê.
+	// í•œ í”„ë ˆì„ ì‹œê°„ ê³„ì‚°.
 	float targetOneFrameTime = 1.0f / targetFrameRate;
 
 	// Game-Loop.
 	while (true)
 	{
-		// Á¾·á Á¶°Ç.
+		// ì¢…ë£Œ ì¡°ê±´.
 		if (quit)
 		{
 			break;
 		}
 
-		// ÇöÀç ÇÁ·¹ÀÓ ½Ã°£ ÀúÀå.
+		// í˜„ì¬ í”„ë ˆì„ ì‹œê°„ ì €ì¥.
 		//time = timeGetTime();
 		QueryPerformanceCounter(&time);
 		currentTime = time.QuadPart;
 
-		// ÇÁ·¹ÀÓ ½Ã°£ °è»ê.
+		// í”„ë ˆì„ ì‹œê°„ ê³„ì‚°.
 		float deltaTime = static_cast<float>(currentTime - previousTime) /
 			static_cast<float>(frequency.QuadPart);
 
-		// ÇÑ ÇÁ·¹ÀÓ ½Ã°£ °è»ê.
+		// í•œ í”„ë ˆì„ ì‹œê°„ ê³„ì‚°.
 		//float targetOneFrameTime = 1.0f / targetFrameRate;
 
-		// ÇÁ·¹ÀÓ È®ÀÎ.
+		// í”„ë ˆì„ í™•ì¸.
 		if (deltaTime >= targetOneFrameTime)
 		{
-			if (!isSoundPlay)
-			{
-				// »ç¿îµå ÇÃ·¹ÀÌ
+			//if (!isSoundPlay)
+			//{
+			//	// ì‚¬ìš´ë“œ í”Œë ˆì´
 
-				// º¯¼ö ÀüÈ¯
-				isSoundPlay = !isSoundPlay;
-				continue;
-			}
-			// ÀÔ·Â Ã³¸® (ÇöÀç Å°ÀÇ ´­¸² »óÅÂ È®ÀÎ).
+			//	// ë³€ìˆ˜ ì „í™˜
+			//	isSoundPlay = !isSoundPlay;
+			//	continue;
+			//}
+			// 
+			// ì…ë ¥ ì²˜ë¦¬ (í˜„ì¬ í‚¤ì˜ ëˆŒë¦¼ ìƒíƒœ í™•ì¸).
 			ProcessInput();
 
-			// ¾÷µ¥ÀÌÆ® °¡´ÉÇÑ »óÅÂ¿¡¼­¸¸ ÇÁ·¹ÀÓ ¾÷µ¥ÀÌÆ® Ã³¸®.
+			// ì—…ë°ì´íŠ¸ ê°€ëŠ¥í•œ ìƒíƒœì—ì„œë§Œ í”„ë ˆì„ ì—…ë°ì´íŠ¸ ì²˜ë¦¬.
 			if (shouldUpdate)
 			{
 				Update(deltaTime);
 				Draw();
 			}
 
-			// Å° »óÅÂ ÀúÀå.
+			// í‚¤ ìƒíƒœ ì €ì¥.
 			SavePreviouseKeyStates();
 
-			// ÀÌÀü ÇÁ·¹ÀÓ ½Ã°£ ÀúÀå.
+			// ì´ì „ í”„ë ˆì„ ì‹œê°„ ì €ì¥.
 			previousTime = currentTime;
 
-			// ¾×ÅÍ Á¤¸® (»èÁ¦ ¿äÃ»µÈ ¾×ÅÍµé Á¤¸®).
+			// ì•¡í„° ì •ë¦¬ (ì‚­ì œ ìš”ì²­ëœ ì•¡í„°ë“¤ ì •ë¦¬).
 			if (mainLevel)
 			{
 				//mainLevel->DestroyActor();
 				mainLevel->ProcessAddedAndDestroyedActor();
 			}
 
-			// ÇÁ·¹ÀÓ È°¼ºÈ­.
+			// í”„ë ˆì„ í™œì„±í™”.
 			shouldUpdate = true;
 		}
 	}
@@ -166,35 +179,35 @@ void Engine::Run()
 
 void Engine::LoadLevel(Level* newLevel)
 {
-	// ±âÁ¸ ·¹º§ÀÌ ÀÖ´Ù¸é »èÁ¦ ÈÄ ±³Ã¼.
+	// ê¸°ì¡´ ë ˆë²¨ì´ ìˆë‹¤ë©´ ì‚­ì œ í›„ êµì²´.
 
-	// ¸ŞÀÎ ·¹º§ ¼³Á¤.
+	// ë©”ì¸ ë ˆë²¨ ì„¤ì •.
 	mainLevel = newLevel;
 }
 
 
 void Engine::AddActor(Actor* newActor)
 {
-	// ¿¹¿Ü Ã³¸®.
+	// ì˜ˆì™¸ ì²˜ë¦¬.
 	if (mainLevel == nullptr)
 	{
 		return;
 	}
 
-	// ·¹º§¿¡ ¾×ÅÍ Ãß°¡.
+	// ë ˆë²¨ì— ì•¡í„° ì¶”ê°€.
 	shouldUpdate = false;
 	mainLevel->AddActor(newActor);
 }
 
 void Engine::DestroyActor(Actor* targetActor)
 {
-	// ¿¹¿Ü Ã³¸®.
+	// ì˜ˆì™¸ ì²˜ë¦¬.
 	if (mainLevel == nullptr)
 	{
 		return;
 	}
 
-	// ·¹º§¿¡ ¾×ÅÍ Ãß°¡.
+	// ë ˆë²¨ì— ì•¡í„° ì¶”ê°€.
 	shouldUpdate = false;
 	targetActor->Destroy();
 }
@@ -218,9 +231,15 @@ void Engine::Draw(const Vector2& position, const char* image, Color color)
 {
 	for (int ix = 0; ix < (int)strlen(image); ++ix)
 	{
-		int index = (position.y * (screenSize.x)) + position.x + ix;
+		int xPos = position.x + ix;
+		int yPos = position.y;
+
+		imageBuffer[yPos][xPos].Char.AsciiChar = image[ix];
+		imageBuffer[yPos][xPos].Attributes = (unsigned long)color;
+
+		/*int index = (position.y * (screenSize.x)) + position.x + ix;
 		imageBuffer[index].Char.AsciiChar = image[ix];
-		imageBuffer[index].Attributes = (unsigned long)color;
+		imageBuffer[index].Attributes = (unsigned long)color;*/
 	}
 }
 
@@ -247,13 +266,13 @@ bool Engine::GetKeyUp(int key)
 
 void Engine::QuitGame()
 {
-	// Á¾·á ÇÃ·¡±× ¼³Á¤.
+	// ì¢…ë£Œ í”Œë˜ê·¸ ì„¤ì •.
 	quit = true;
 }
 
 Engine& Engine::Get()
 {
-	// ½Ì±ÛÅæ °´Ã¼ ¹İÈ¯.
+	// ì‹±ê¸€í†¤ ê°ì²´ ë°˜í™˜.
 	return *instance;
 }
 
@@ -268,7 +287,7 @@ void Engine::ProcessInput()
 
 void Engine::Update(float deltaTime)
 {
-	// ·¹º§ ¾÷µ¥ÀÌÆ®.
+	// ë ˆë²¨ ì—…ë°ì´íŠ¸.
 	if (mainLevel != nullptr)
 	{
 		mainLevel->Update(deltaTime);
@@ -283,19 +302,26 @@ void Engine::Clear()
 
 void Engine::Draw()
 {
-	// È­¸é Áö¿ì±â.
+	// í™”ë©´ ì§€ìš°ê¸°.
 	Clear();
 
-	// ·¹º§ ±×¸®±â.
+	// ë ˆë²¨ ê·¸ë¦¬ê¸°.
 	if (mainLevel != nullptr)
 	{
 		mainLevel->Draw();
 	}
 
-	// ¹é¹öÆÛ¿¡ µ¥ÀÌÅÍ ¾²±â.
-	GetRenderer()->Draw(imageBuffer);
+	// ë°±ë²„í¼ì— ë°ì´í„° ì“°ê¸°.
+	for (int y = 0; y < screenSize.y; ++y)
+	{
+		for (int x = 0; x < screenSize.x; ++x)
+		{
+			charInfo[y * screenSize.x + x] = imageBuffer[y][x];
+		}
+	}
+	GetRenderer()->Draw(charInfo);
 
-	// ÇÁ·ĞÆ®<->¹é ¹öÆÛ ±³È¯.
+	// í”„ë¡ íŠ¸<->ë°± ë²„í¼ êµí™˜.
 	Present();
 }
 
@@ -316,25 +342,30 @@ void Engine::SavePreviouseKeyStates()
 
 void Engine::ClearImageBuffer()
 {
-	// ¹öÆÛ µ¤¾î¾²±â.
+	// ë²„í¼ ë®ì–´ì“°ê¸°.
 	for (int y = 0; y < screenSize.y; ++y)
 	{
-		// ¹öÆÛ µ¤¾î¾²±â.
-		for (int x = 0; x < screenSize.x + 1; ++x)
+		// ë²„í¼ ë®ì–´ì“°ê¸°.
+		for (int x = 0; x < screenSize.x; ++x)
 		{
-			auto& buffer = imageBuffer[(y * (screenSize.x + 1)) + x];
+			auto& buffer = imageBuffer[y][x];
 			buffer.Char.AsciiChar = ' ';
 			buffer.Attributes = 0;
+
+			// 1ì°¨ì›ì—ì„œ 
+			/*auto& buffer = imageBuffer[(y * (screenSize.x + 1)) + x];
+			buffer.Char.AsciiChar = ' ';
+			buffer.Attributes = 0;*/
 		}
 
-		// °¢ ÁÙ ³¡¿¡ °³Çà ¹®ÀÚ Ãß°¡.
-		auto& buffer = imageBuffer[(y * (screenSize.x + 1)) + screenSize.x];
+		// ê° ì¤„ ëì— ê°œí–‰ ë¬¸ì ì¶”ê°€.
+		/*auto& buffer = imageBuffer[(y * (screenSize.x + 1)) + screenSize.x];
 		buffer.Char.AsciiChar = '\n';
-		buffer.Attributes = 0;
+		buffer.Attributes = 0;*/
 	}
 
-	// ¸¶Áö¸·¿¡ ³Î ¹®ÀÚ Ãß°¡.
-	auto& buffer = imageBuffer[(screenSize.x + 1) * screenSize.y];
+	// ë§ˆì§€ë§‰ì— ë„ ë¬¸ì ì¶”ê°€.
+	/*auto& buffer = imageBuffer[(screenSize.x + 1) * screenSize.y];
 	buffer.Char.AsciiChar = '\0';
-	buffer.Attributes = 0;
+	buffer.Attributes = 0;*/
 }

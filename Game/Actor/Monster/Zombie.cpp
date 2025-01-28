@@ -22,8 +22,9 @@ void Zombie::Update(float deltaTime)
 {
 	if (zombie_hp == 0)
 	{
-		SetIsVisible(false);
-		SetActive(false);
+		Destroy();
+		//SetIsVisible(false);
+		//SetActive(false);
 		MonsterCount--;
 		position = { 0,0 };
 		return;

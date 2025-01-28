@@ -1,13 +1,13 @@
-#pragma once
+ï»¿#pragma once
 
-// ÀÛ¼ºÀÚ: Àå¼¼À±.
-// - °æ°í¸¦ ÀÏºÎ·¯ ¹«½Ã ½ÃÄ×±â ¶§¹®¿¡ ¹®Á¦°¡ µÈ´Ù¸é °íÃÄ¾ß ÇÔ.
+// ìž‘ì„±ìž: ìž¥ì„¸ìœ¤.
+// - ê²½ê³ ë¥¼ ì¼ë¶€ëŸ¬ ë¬´ì‹œ ì‹œì¼°ê¸° ë•Œë¬¸ì— ë¬¸ì œê°€ ëœë‹¤ë©´ ê³ ì³ì•¼ í•¨.
 #pragma warning (disable : 4172)
 
 #include "Core.h"
 
-// »ó¼Ó °ü°è¿¡ ÀÖ´Â Å¬·¡½º °£ÀÇ
-// µ¿Àû(½ÇÇàÁß¿¡) Çüº¯È¯À» ºü¸£°Ô ÇÏ±â À§ÇØ »ç¿ëÇÏ´Â Å¬·¡½º.
+// ìƒì† ê´€ê³„ì— ìžˆëŠ” í´ëž˜ìŠ¤ ê°„ì˜
+// ë™ì (ì‹¤í–‰ì¤‘ì—) í˜•ë³€í™˜ì„ ë¹ ë¥´ê²Œ í•˜ê¸° ìœ„í•´ ì‚¬ìš©í•˜ëŠ” í´ëž˜ìŠ¤.
 // RunTime-Type-Information.
 class ENGINE_API RTTI
 {

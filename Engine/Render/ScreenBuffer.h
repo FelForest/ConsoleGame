@@ -1,46 +1,46 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Core.h"
 #include "Math/Vector2.h"
 
-// È­¸é ¹öÆÛ¿¡ ±â·ÏÇÒ Á¤º¸.
+// í™”ë©´ ë²„í¼ì— ê¸°ë¡í•  ì •ë³´.
 struct Character
 {
-	// ¹®ÀÚ.
+	// ë¬¸ìž.
 	char image;
 
-	// »ö»ó Á¤º¸.
+	// ìƒ‰ìƒ ì •ë³´.
 	Color color;
 };
 
-// ´õºí ¹öÆÛ¸µ ±¸Çö¿¡ »ç¿ëÇÒ È­¸é ¹öÆÛ Å¬·¡½º.
+// ë”ë¸” ë²„í¼ë§ êµ¬í˜„ì— ì‚¬ìš©í•  í™”ë©´ ë²„í¼ í´ëž˜ìŠ¤.
 class ScreenBuffer
 {
 	friend class Engine;
 
 public:
-	// »ý¼ºÀÚ¿¡ Å©±â¸¸ Àü´ÞÇÏ¸é, »õ·Î¿î ÄÜ¼Ö ¹öÆÛ¸¦ »ý¼º.
+	// ìƒì„±ìžì— í¬ê¸°ë§Œ ì „ë‹¬í•˜ë©´, ìƒˆë¡œìš´ ì½˜ì†” ë²„í¼ë¥¼ ìƒì„±.
 	ScreenBuffer(const COORD& size);
 
-	// »ý¼ºÀÚ¿¡ HANDLEÀ» Àü´ÞÇÏ¸é, Ç¥ÁØ Ãâ·Â ÇÚµéÀ» »ç¿ëÇØ ÄÜ¼Ö ¹öÆÛ »ý¼º.
+	// ìƒì„±ìžì— HANDLEì„ ì „ë‹¬í•˜ë©´, í‘œì¤€ ì¶œë ¥ í•¸ë“¤ì„ ì‚¬ìš©í•´ ì½˜ì†” ë²„í¼ ìƒì„±.
 	ScreenBuffer(HANDLE console, const COORD& size);
 
-	// ¼Ò¸êÀÚ.
+	// ì†Œë©¸ìž.
 	~ScreenBuffer();
 
-	// Ä¿¼­ Å¸ÀÔ ¼³Á¤(Ä¿¼­ °¨Ãß±â °¡´É) ÇÔ¼ö.
+	// ì»¤ì„œ íƒ€ìž… ì„¤ì •(ì»¤ì„œ ê°ì¶”ê¸° ê°€ëŠ¥) í•¨ìˆ˜.
 	void SetCursorType(CursorType cursorType);
 
-	// ¹öÆÛ Áö¿ì´Â ÇÔ¼ö.
+	// ë²„í¼ ì§€ìš°ëŠ” í•¨ìˆ˜.
 	void Clear();
 
-	// ÄÜ¼Ö ¹öÆÛ¿¡ ÀüÃ¼ ¹®ÀÚ¿­ ¹öÆÛ¸¦ ¾µ ¶§ »ç¿ëÇÏ´Â ÇÔ¼ö.
+	// ì½˜ì†” ë²„í¼ì— ì „ì²´ ë¬¸ìžì—´ ë²„í¼ë¥¼ ì“¸ ë•Œ ì‚¬ìš©í•˜ëŠ” í•¨ìˆ˜.
 	void Draw(CHAR_INFO* buffer);
 
 private:
-	// ÄÜ¼Ö ÇÚµé.
+	// ì½˜ì†” í•¸ë“¤.
 	HANDLE buffer;
 
-	// ÄÜ¼Ö È­¸é Å©±â.
+	// ì½˜ì†” í™”ë©´ í¬ê¸°.
 	COORD size;
 };

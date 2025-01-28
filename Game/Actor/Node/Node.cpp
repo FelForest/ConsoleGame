@@ -18,10 +18,12 @@ Node::Node(Vector2 position, float speed)
 	int margin = 20;
 	for (int ix = 0; ix < noteCount; ++ix)
 	{
-		children.PushBack(new ChildNode({ margin, position.y + ix }, nodeSpeed));
+        ChildNode* childNode1 = new ChildNode({ margin, position.y + ix }, nodeSpeed);
+		children.PushBack(childNode1);
         isHits.PushBack(false);
         isMisses.PushBack(false);
-		children.PushBack(new ChildNode({ xScreenSize - margin, position.y + ix }, -nodeSpeed));
+        ChildNode* childNode2 = new ChildNode({ xScreenSize - margin, position.y + ix }, -nodeSpeed);
+		children.PushBack(childNode2);
         isHits.PushBack(false);
         isMisses.PushBack(false);
 	}

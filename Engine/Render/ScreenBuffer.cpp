@@ -1,4 +1,4 @@
-#include "PreCompiledHeader.h"
+Ôªø#include "PreCompiledHeader.h"
 #include "ScreenBuffer.h"
 
 ScreenBuffer::ScreenBuffer(const COORD& size)
@@ -38,10 +38,10 @@ ScreenBuffer::~ScreenBuffer()
 
 void ScreenBuffer::SetCursorType(CursorType cursorType)
 {
-	// 1. ƒøº≠ º”º∫ ±∏¡∂√º º≥¡§.
+	// 1. Ïª§ÏÑú ÏÜçÏÑ± Íµ¨Ï°∞Ï≤¥ ÏÑ§Ï†ï.
 	CONSOLE_CURSOR_INFO info = { };
 
-	// ≈∏¿‘ ∫∞∑Œ ±∏¡∂√º ∞™ º≥¡§.
+	// ÌÉÄÏûÖ Î≥ÑÎ°ú Íµ¨Ï°∞Ï≤¥ Í∞í ÏÑ§Ï†ï.
 	switch (cursorType)
 	{
 	case CursorType::NoCursor:
@@ -55,12 +55,12 @@ void ScreenBuffer::SetCursorType(CursorType cursorType)
 		break;
 
 	case CursorType::NormalCursor:
-		info.dwSize = 20;
+		info.dwSize = 1;
 		info.bVisible = TRUE;
 		break;
 	}
 
-	// 2. º≥¡§.
+	// 2. ÏÑ§Ï†ï.
 	SetConsoleCursorInfo(buffer, &info);
 }
 

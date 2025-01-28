@@ -25,7 +25,7 @@ GameLevel::GameLevel()
     AddActor(heart);
 
     // ¸Ê Ãß°¡
-    for (int ix = 0; ix < 10; ++ix)
+    /*for (int ix = 0; ix < 10; ++ix)
     {
         for (int jx = 0; jx < 10; ++jx)
         {
@@ -54,7 +54,7 @@ GameLevel::GameLevel()
             }
             
         }
-    }
+    }*/
 
     player = new Player({ ((Game::Get().ScreenSize().x / 2)), (Game::Get().ScreenSize().y / 2) }, this);
     actors.PushBack(player);
@@ -128,7 +128,7 @@ void GameLevel::Update(float deltaTime)
     static Timer MonsterSpawnTimer(spawnTime * 2);
     MonsterSpawnTimer.Update(deltaTime);
 
-    if (MonsterSpawnTimer.IsTimeOut() && monster_count < 5)
+    if (MonsterSpawnTimer.IsTimeOut() && monster_count < 2)
     {
         int count = Random(0, 3);
 
