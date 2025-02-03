@@ -1,33 +1,25 @@
 #include "Game.h"
 
-//#include "Level/MenuLevel.h"
-
-Game* Game::instance = nullptr;
+#include "Level/TitleLevel.h"
+#include "Level/MenuLevel.h"
+#include "Level/ScoreLevel.h"
+#include "Level/GameLevel.h"
 
 Game::Game()
 	: Engine()
 {
-	instance = this;
+	titleLevel = new TitleLevel();
+	menuLevel = new MenuLevel();
+	scoreLevel = new ScoreLevel();
+	gameLevel = new GameLevel();
 
-	//menuLevel = new MenuLevel();
+	LoadLevel(titleLevel);
 }
 
 Game::~Game()
 {
-	if (showMenu)
-	{
-		delete backLevel;
-		backLevel = nullptr;
-		mainLevel = nullptr;
-	}
-	else
-	{
-		delete mainLevel;
-		mainLevel = nullptr;
-	}
-}
-
-Level* Game::CurrentLevel()
-{
-	return mainLevel;
+	SafeDelete(titleLevel);
+	SafeDelete(menuLevel);
+	SafeDelete(scoreLevel);
+	SafeDelete(gameLevel);
 }

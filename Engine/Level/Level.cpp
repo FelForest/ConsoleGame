@@ -29,9 +29,9 @@ void Level::ProcessAddedAndDestroyedActor()
 	{
 		if (actors[ix]->isExpired)
 		{
-			delete actors[ix];
-			actors[ix] = nullptr;
+			SafeDelete(actors[ix]);
 			actors.Erase(ix);
+			continue;
 		}
 		else
 		{
@@ -42,10 +42,8 @@ void Level::ProcessAddedAndDestroyedActor()
 	// 추가 요청된 액터 처리.
 	while (!addRequestedActors.IsEmpty())
 	{
-		addRequestedActor = addRequestedActors[0];
-		actors.PushBack(addRequestedActor);
+		actors.PushBack(std::move(addRequestedActors[0]));
 		addRequestedActors.Erase(0);
-		addRequestedActor = nullptr;
 	}
 }
 

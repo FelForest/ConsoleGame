@@ -18,6 +18,16 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Game\Game.h" />
+    <ClInclude Include="Level\GameLevel.h" />
+    <ClInclude Include="Level\MenuLevel.h" />
+    <ClInclude Include="Level\ScoreLevel.h" />
+    <ClInclude Include="Level\TitleLevel.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Game\Game.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -180,35 +190,6 @@
       <Command>xcopy ..\Assets "$(OutDir)..\Assets\" /y /e</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="Actor\Heart\Heart.cpp" />
-    <ClCompile Include="Actor\Heart\HeartPart.cpp" />
-    <ClCompile Include="Actor\Map\Ground.cpp" />
-    <ClCompile Include="Actor\Map\Wall.cpp" />
-    <ClCompile Include="Actor\Monster\Monster.cpp" />
-    <ClCompile Include="Actor\Monster\Slime.cpp" />
-    <ClCompile Include="Actor\Monster\Zombie.cpp" />
-    <ClCompile Include="Actor\Node\ChildNode.cpp" />
-    <ClCompile Include="Actor\Node\Node.cpp" />
-    <ClCompile Include="Actor\Player.cpp" />
-    <ClCompile Include="Game\Game.cpp" />
-    <ClCompile Include="Level\GameLevel.cpp" />
-    <ClCompile Include="Main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Actor\Heart\Heart.h" />
-    <ClInclude Include="Actor\Heart\HeartPart.h" />
-    <ClInclude Include="Actor\Map\Ground.h" />
-    <ClInclude Include="Actor\Map\Wall.h" />
-    <ClInclude Include="Actor\Monster\Monster.h" />
-    <ClInclude Include="Actor\Monster\Slime.h" />
-    <ClInclude Include="Actor\Monster\Zombie.h" />
-    <ClInclude Include="Actor\Node\ChildNode.h" />
-    <ClInclude Include="Actor\Node\Node.h" />
-    <ClInclude Include="Actor\Player.h" />
-    <ClInclude Include="Game\Game.h" />
-    <ClInclude Include="Level\GameLevel.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

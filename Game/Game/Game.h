@@ -1,24 +1,19 @@
 #pragma once
 
-#include <Engine/Engine.h>
+#include "Engine/Engine.h"
+
+
+class Level;
 
 class Game : public Engine
 {
-public:
+public :
 	Game();
 	~Game();
 
-	static Game& Get() { return *instance; }
-
-	Level* CurrentLevel();
-
 private:
-	bool showMenu = false;
-
+	Level* titleLevel = nullptr;
 	Level* menuLevel = nullptr;
-	Level* backLevel = nullptr;
-
-
-private:
-	static Game* instance;
+	Level* scoreLevel = nullptr;
+	Level* gameLevel = nullptr;
 };

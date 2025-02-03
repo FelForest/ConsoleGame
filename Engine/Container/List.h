@@ -19,7 +19,15 @@ public:
 	{
 		if (data != nullptr)
 		{
-			delete[] data;
+			try
+			{
+				delete[] data;
+				data = nullptr;
+			}
+			catch (const std::runtime_error& e)
+			{
+				std::cout << "Caught exception: " << e.what() << std::endl;  // 중복 해제 예외 처리
+			}
 		}
 	}
 
@@ -47,6 +55,7 @@ public:
 
 	void Erase(int index)
 	{
+
 		// 예외 처리.
 		if (index < 0 || index >= size)
 		{
