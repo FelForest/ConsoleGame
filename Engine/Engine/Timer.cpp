@@ -1,14 +1,14 @@
 ﻿#include "PreCompiledHeader.h"
-#include "Timer.h"
+#include "Core.h"
 
 Timer::Timer(float setTime)
 	: setTime(setTime)
 {
 }
 
-void Timer::Update(float delatTime)
+void Timer::Update(float deltaTime)
 {
-	elapsedTime += delatTime;
+	elapsedTime += deltaTime;
 }
 
 void Timer::Reset()

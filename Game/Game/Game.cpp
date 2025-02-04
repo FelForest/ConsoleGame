@@ -13,13 +13,13 @@ Game::Game()
 	scoreLevel = new ScoreLevel();
 	gameLevel = new GameLevel();
 
-	LoadLevel(titleLevel);
+	LoadLevel(gameLevel);
 }
 
 Game::~Game()
 {
-	SafeDelete(titleLevel);
-	SafeDelete(menuLevel);
-	SafeDelete(scoreLevel);
-	SafeDelete(gameLevel);
+	//SafeDelete(titleLevel);
+	//SafeDelete(menuLevel);
+	//SafeDelete(scoreLevel);
+	//SafeDelete(gameLevel);
 }

@@ -7,6 +7,14 @@
 #include <stdlib.h>
 #include <crtdbg.h>
 
+#if ENGINE_BUILD_DLL
+#define ENGINE_API __declspec(dllexport)
+#else
+#define ENGINE_API __declspec(dllimport)
+#endif
+
+class Timer;
+
 // 색상 열거형.
 enum class Color : unsigned short
 {
@@ -56,6 +64,8 @@ void SafeDelete(T*& pointer)
 	}
 }
 
+
+
 // 로그 함수.
 template<typename... T>
 void Log(const char* format, T&&... args)
@@ -87,6 +97,25 @@ inline void CheckMemoryLeak()
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 }
 
+// 타이머 클래스
+class ENGINE_API Timer
+{
+public:
+	Timer(float time);
+
+	void Update(float deltaTime);
+	void Reset();
+
+	inline bool IsTimeOut() const { return elapsedTime >= setTime; }
+	inline void SetTime(float time) { setTime = time; }
+
+private:
+	float elapsedTime = 0.0f;
+	float setTime = 0.0f;
+};
+
+
+
 // 디버깅 용도.
 #ifdef _DEBUG
 #define new new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
@@ -96,11 +125,6 @@ inline void CheckMemoryLeak()
 #define new new
 #endif
 
-#if ENGINE_BUILD_DLL
-#define ENGINE_API __declspec(dllexport)
-#else
-#define ENGINE_API __declspec(dllimport)
-#endif
 
 #define VK_LBUTTON        0x01
 #define VK_RBUTTON        0x02

@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Actor\MoveableActor.h" />
+    <ClInclude Include="Actor\Test.h" />
     <ClInclude Include="Game\Game.h" />
     <ClInclude Include="Level\GameLevel.h" />
     <ClInclude Include="Level\MenuLevel.h" />
@@ -26,7 +28,13 @@
     <ClInclude Include="Level\TitleLevel.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="actor\MoveableActor.cpp" />
+    <ClCompile Include="Main.cpp" />
     <ClCompile Include="Game\Game.cpp" />
+    <ClCompile Include="LEVEL\GameLevel.cpp" />
+    <ClCompile Include="Level\MenuLevel.cpp" />
+    <ClCompile Include="Level\ScoreLevel.cpp" />
+    <ClCompile Include="Level\TitleLevel.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
