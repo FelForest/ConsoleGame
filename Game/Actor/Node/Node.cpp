@@ -121,5 +121,3 @@ void Node::Draw()
         //std::cout << "Heart instance address: " << &Heart::Get() << std::endl;
     }
 }
-
-

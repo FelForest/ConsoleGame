@@ -15,7 +15,7 @@ class Monster : public DrawableActor
 public:
 	Monster(Vector2 position, GameLevel* level);
 	Monster();
-	~Monster();
+	virtual ~Monster();
 
 	virtual void Attacked(int damage);
 
@@ -34,7 +34,7 @@ protected:
 	int monster_damage;
 
 	Player* player = nullptr;
-	List<Monster*> monsters;
+	const List<Monster*>* monsters;
 
 protected:
 	virtual void Move(Vector2 target);

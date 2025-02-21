@@ -4,13 +4,13 @@
 
 
 Monster::Monster(Vector2 position, GameLevel* level)
-	: DrawableActor()
+	: DrawableActor(), reflevel(level), monsters(reflevel->GetMonsters()), player(reflevel->player)
 {
 	this->position = position;
-	reflevel = level;
+	//reflevel = level;
 
-	this->player = reflevel->player;
-	monsters = reflevel->GetMonsters();
+	//this->player = reflevel->player;
+	//monsters = reflevel->GetMonsters();
 
 	MonsterCount++;
 }

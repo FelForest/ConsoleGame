@@ -28,8 +28,7 @@ void Level::ProcessAddedAndDestroyedActor()
 	{
 		if (actors[ix]->isExpired)
 		{
-			delete actors[ix];
-			actors[ix] = nullptr;
+			SafeDelete(actors[ix]);
 			actors.Erase(ix);
 		}
 		else

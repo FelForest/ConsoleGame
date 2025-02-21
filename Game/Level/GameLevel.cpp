@@ -50,7 +50,6 @@ GameLevel::GameLevel()
                     Vector2 position = { (Game::Get().ScreenSize().x / 2) - 6 + ix , (Game::Get().ScreenSize().y / 2) - 6 + jx };
                     actors.PushBack(new Wall(position));
                 }
-                
             }
             
         }
@@ -211,9 +210,9 @@ bool GameLevel::CheckCanMove(Vector2 target)
     return true;
 }
 
-const List<Monster*>& GameLevel::GetMonsters()
+const List<Monster*>* GameLevel::GetMonsters()
 {
-    return monsters;
+    return &monsters;
 }
 
 bool GameLevel::CheckGameOver()

@@ -48,7 +48,7 @@ public:
 
 	bool CheckCanMove(Vector2 target);
 
-	const List<Monster*>& GetMonsters();
+	const List<Monster*>* GetMonsters();
 public:
 	bool CanMove = false;
 
